@@ -5,5 +5,5 @@ When the client is waiting for a response for a request, `<ApiWaiting />` can be
 
 ### Usage:
 ```jsx
-<ApiWaiting  />
+isApiWaiting && <ApiWaiting  />
 ```

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 const Button = ({ type, text, disabled, callback, icon }) => {
   const className = () => {
@@ -25,7 +26,13 @@ const Button = ({ type, text, disabled, callback, icon }) => {
   )
 }
 
-
+Button.propTypes = {
+  type: ["button", "link"],
+  text: PropTypes.string,
+  disabled: PropTypes.bool,
+  callback: PropTypes.func,
+  icon: PropTypes.object
+};
 
 const LazyIcon = (props) => {
   return React.cloneElement(props.icon, {
