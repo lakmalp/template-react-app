@@ -16,10 +16,10 @@ const PurchaseOrderScreen = (props) => {
   let globalState = useContext(GlobalStateContext)
 
   useEffect(() => {
-    EventBus.on("loadHeader", () => {
+    EventBus.on("loadHeader", (refresh_id) => {
       globalState.write("PurchaseOrder", {});
       globalState.write("PurchaseOrderLine", []);
-      refreshData("PurchaseOrder");
+      refreshData("PurchaseOrder", refresh_id);
     }
     );
 
@@ -38,11 +38,11 @@ const PurchaseOrderScreen = (props) => {
           EventBus.dispatch("headerLoading", "");
           EventBus.dispatch("loadingStarted", dataSource);
           globalState.write(dataSource, {});
-          _res = await purchase_order_api.get(id);
+          _res = await purchase_order_api.get(parent_id);
           data = _res.data.data;
           globalState.write(dataSource, data);
           globalState.setLoadingSource();
-          EventBus.dispatch("headerLoadingDone", id);
+          EventBus.dispatch("headerLoadingDone", parent_id);
           EventBus.dispatch("loadingFinished");
         } catch (err) {
           EventBus.dispatch("headerLoadingError", "");

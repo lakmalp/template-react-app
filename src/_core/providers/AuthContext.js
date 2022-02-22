@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       setAuthError("");
       navigate(from, { replace: true });
     } catch (err) {
-      setAuthError(decodeError(err).message)
+      setAuthError(decodeError(err))
     } finally {
       setIsAuthWaiting(false)
     }
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       setAuthError("");
       navigate("/login");
     } catch (err) {
-      setAuthError(decodeError(err).message)
+      setAuthError(decodeError(err))
     } finally {
       setIsAuthWaiting(false)
     }
@@ -78,8 +78,9 @@ export const AuthProvider = ({ children }) => {
         setIsAuthWaiting(false)
       } catch (err) {
         setIsAuthed(false)
-        setAuthError(decodeError(err).message)
+        setAuthError(decodeError(err))
         setIsAuthWaiting(false)
+        setIsPingingServer(false)
         navigate("/login");
       }
     })();

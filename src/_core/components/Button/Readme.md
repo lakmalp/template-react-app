@@ -1,17 +1,27 @@
-## Button
+---
+name: Button
+menu: Components
+---
 
-### Description:
-A Button can display itself as a button or a link.
+import { Playground, Props } from 'docz'
+import { Button } from './Button'
+import { IconEdit } from '../../utilities/svg-icons.js'
 
-NB: `icon.component` is an svg representation.
 
-### Usage:
-```html
-<Button
-  type="button"
-  text="Save"
-  disabled={isButtonDisabled}
-  callback={() => save()}
-  icon={{ component: <Icon />, width: 13 }}
-/>
-```
+# Button
+
+## Properties
+
+<Props of={Button} />
+
+## Basic usage
+
+<Playground>
+  <Button
+    type="button"
+    text="Save"
+    disabled={isButtonDisabled}
+    callback={() => save()}
+    icon={{ component: <IconEdit />, width: 13 }}
+  />
+</Playground>
