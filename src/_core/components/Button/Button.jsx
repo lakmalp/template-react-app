@@ -1,26 +1,36 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { IconLoading } from "../../utilities/svg-icons";
+import theme from "../../theme";
 
-const Button = ({ type, text, disabled, callback, icon }) => {
-  const className = () => {
-    switch (type) {
-      case "button":
-        return `mr-2 py-1 text-xs font-roboto rounded text-black ` + (disabled ? "border border-gray-300 bg-gray-200 pointer-events-none" : "border border-blue-300 bg-gradient-to-b from-blue-200 to-blue-300 hover:from-blue-300 hover:shadow");
-      default:
-        return `mr-2 py-2 text-xs font-roboto rounded ` + (disabled ? "text-gray-500 pointer-events-none" : " text-black hover:text-white hover:bg-gray-500");
-    }
+const Button = ({
+  type,
+  text,
+  disabled,
+  callback,
+  icon,
+  animate,
+  variant,
+  className
+}) => {
+
+  const getClassName = () => {
+    return className + ' ' + theme[type][variant][(disabled ? "disabled" : "enabled")]
   }
   return (
     <button
-      className={className()}
+      className={getClassName()}
       onClick={() => callback()}
       disabled={disabled}
     >
-      <div className='flex items-center mx-2'>
+      <div className='flex justify-center items-center'>
         {
-          icon && <LazyIcon icon={icon.component} width={icon.width} className="mr-2" color={disabled ? "#000" : "#000"} />
+          icon && !animate && <LazyIcon icon={icon.component} width={icon.width} className={" " + (animate ? "animate-spin-slow" : "")} color={disabled ? "#fff" : "#fff"} />
         }
-        {text}
+        {
+          animate && <IconLoading className=" animate-spin mr-2" width="15" color="white" />
+        }
+        {text && <span className={(icon?"ml-2":"")}>{text}</span>}
       </div>
     </button>
   )
@@ -31,8 +41,18 @@ Button.propTypes = {
   text: PropTypes.string,
   disabled: PropTypes.bool,
   callback: PropTypes.func,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  variant: PropTypes.oneOf(["primary", "warning", "danger", "info", "default"]),
+  className: PropTypes.string
 };
+
+Button.defaultProps = {
+  animate: false,
+  disabled: false,
+  type: "button",
+  variant: "primary",
+  className: ""
+}
 
 const LazyIcon = (props) => {
   return React.cloneElement(props.icon, {

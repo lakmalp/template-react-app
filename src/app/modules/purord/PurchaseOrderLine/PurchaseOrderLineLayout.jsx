@@ -249,6 +249,7 @@ const PurchaseOrderLineLayout = (props) => {
   };
 
   const lineMenuActionHandler = (action, params) => {
+    console.log('lineMenuActionHandler()');
     switch (action) {
       case "menuInsertAbove":
         lineMenuInsert(params, "above");
@@ -266,6 +267,7 @@ const PurchaseOrderLineLayout = (props) => {
   }
 
   const lineMenuInquireHandler = (action, id) => {
+    console.log('lineMenuInquireHandler()');
     switch (action) {
       case "menuInsertAbove":
         return true;
@@ -280,6 +282,7 @@ const PurchaseOrderLineLayout = (props) => {
   }
 
   const commandBarInquireHandler = (data, setData, selectedLines, action) => {
+    console.log('commandBarInquireHandler()');
     if (props.disabled) {
       return false;
     } else {
@@ -319,6 +322,7 @@ const PurchaseOrderLineLayout = (props) => {
   }
 
   const sideBarInquireHandler = (data, setData, selectedLines, action) => {
+    console.log('sideBarInquireHandler()');
     if (props.disabled) {
       return false;
     } else {
@@ -342,6 +346,7 @@ const PurchaseOrderLineLayout = (props) => {
   }
 
   const sideBarActionHandler = async (data, setData, selectedLines, setSelectedLines, action) => {
+    console.log('sideBarActionHandler()');
     switch (action) {
       case "cmdNewRecord":
         let max_seq = 0;

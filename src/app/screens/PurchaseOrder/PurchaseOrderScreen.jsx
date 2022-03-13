@@ -83,7 +83,7 @@ const PurchaseOrderScreen = (props) => {
       <Helmet>
         <title>{`Purchase Order - ${id}`}</title>
       </Helmet>
-      <div className=" w-full" ref={containerRef}>
+      <div id='xxx' className=" w-full " ref={containerRef}>
         <div className="font-montserrat text-md font-semibold text-ss-900 px-2 my-2">
           {`Purchase Order ` + (globalState.loadingSource === "PurchaseOrder" ? "" : `# ${id}`)}
         </div>

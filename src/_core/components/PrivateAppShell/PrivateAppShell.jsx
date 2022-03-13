@@ -1,17 +1,19 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Route, Routes, Outlet } from "react-router-dom";
-import { ApiWaiting, BreadCrumbs, Loader, MainCommandBar, ToastContainer, Sidebar } from "..";
+import { ApiWaiting, BreadCrumbs, Loader, MainCommandBar, ToastContainer, Sidebar,Button } from "..";
 import { DialogBoxProvider } from "../../providers/DialogBoxContext";
 import GlobalStateContext from "../../providers/GlobalStateContext";
 import { ToastProvider } from "../../providers/ToastContext";
 import { DialogBoxContainer } from "../DialogBox";
 import base_routes from "../../base-routes"
 import app_routes from "../../../app/routes"
+import { IconRefresh, IconSidebar } from "../../utilities/svg-icons";
 
 const PrivateAppShell = (props) => {
   let globalState = useContext(GlobalStateContext);
   let _routes = [];
   let hasRootRef = useRef(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   hasRootRef.current = app_routes.reduce((acc, cur) => {
     acc = acc || (cur.path === '/')
@@ -31,9 +33,16 @@ const PrivateAppShell = (props) => {
           <ToastContainer />
           <DialogBoxContainer />
           <div className='flex h-screen '>
-            <Sidebar />
+            {!sidebarCollapsed && <Sidebar />}
             <div className=" w-full">
-              <div className='flex justify-between items-center bg-white px-2 h-10 border-b'>
+              <div className='w-full flex justify-between items-center px-2 h-10 border-b shadow'>
+                <Button
+                  variant="primary"
+                  className=" px-1 "
+                  text=""
+                  callback={() => setSidebarCollapsed(prev => !prev)}
+                  icon={{ component: <IconSidebar />, width: 20 }}
+                />
                 <BreadCrumbs />
                 <MainCommandBar />
               </div>
