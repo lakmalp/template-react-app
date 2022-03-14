@@ -21,7 +21,7 @@ Icon to be rendered to the left of the display text. It is an icon from the icon
 When `true`, it renders a spinning loading icon instead of the icon specified in `icon` prop.
 ### *_variant_*
 
-Accent of the button. Which can take "primary", "secondary", "danger", "default". All these variants have to be defined in the theme.
+Accent of the button. Which can take "primary", "secondary", "danger", "default". All these variants have to be defined in the [theme.js](https://github.com/lakmalp/template-react-app/blob/develop/src/_core/theme.js).
 ### *_className_*
 
 Additional css classes to be included in the container of the button.
