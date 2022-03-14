@@ -1,11 +1,34 @@
 # Button
 ## Props
-### type
+
+### *_type_*
+
 Can be of `button` or `link`. It defines how the html button element should be rendered.
-### text
-### disabled
-### callback
-### icon
-### animate
-### variant
-### className
+### *_text_*
+
+Display text of the button.
+### *_disabled_*
+
+A boolean which specifies whether the button is disabled.
+### *_callback_*
+
+A callback to be called on `onClick` event.
+### *_icon_*
+
+Icon to be rendered to the left of the display text. It is an icon from the icon repository.
+### *_animate_*
+
+When `true`, it renders a spinning loading icon instead of the icon specified in `icon` prop.
+### *_variant_*
+
+Accent of the button. Which can take "primary", "secondary", "danger", "default". All these variants have to be defined in the theme.
+### *_className_*
+
+Additional css classes to be included in the container of the button.
+## Default Props
+
+1. animate: `false`
+2. disabled: `false`
+3. type: `button`
+4. variant: `primary`
+5. className: ""
