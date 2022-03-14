@@ -2,7 +2,6 @@
 
 ## Syntax
 
-`
     <Button
         type="button"
         text="Submit"
@@ -13,7 +12,6 @@
         icon={{ component: <IconSubmit />, width: 13 }}
         animate={false}
     />
-`
 ## Props
 
 ### *_type_*
