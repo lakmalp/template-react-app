@@ -2,7 +2,7 @@
 
 ## Syntax
 
-`jsx
+`
     <Button
         type="button"
         text="Submit"
