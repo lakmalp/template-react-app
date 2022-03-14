@@ -3,16 +3,16 @@
 ## Syntax
 
 ```jsx
-    <Button
-        type="button"
-        text="Submit"
-        variant="primary"
-        className="mr-2 px-2"
-        disabled={false}
-        callback={() => handler()}
-        icon={{ component: <IconSubmit />, width: 13 }}
-        animate={false}
-    />
+<Button
+    type="button"
+    text="Submit"
+    variant="primary"
+    className="mr-2 px-2"
+    disabled={false}
+    callback={() => handler()}
+    icon={{ component: <IconSubmit />, width: 13 }}
+    animate={false}
+/>
 ```
 
 ## Props
