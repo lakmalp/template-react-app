@@ -39,7 +39,7 @@
 #### `configuration`
 table and column configuration details. `id`, `_seq_`, and `_line_no_` are mandatory columns.
 
-```json
+```javascript
 {
     general: {
       showGrandSum: true,
