@@ -108,9 +108,6 @@ table and column configuration details. `id`, `_seq_`, and `_line_no_` are manda
         decimals: 0,
         visible: { 'xs': true, 'sm': true, 'md': true, 'lg': true, 'xl': true, '2xl': true, '3xl': true },
         autosum: false
-      },
-      {
-          /* list of other columns */
       }
     ]
   }
