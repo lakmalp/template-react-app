@@ -51,7 +51,7 @@ data
 #### `dataSource`
 data source in which the table has been attached to
 
-#### `*`_loadingSource`
+#### `loadingSource`
 current loading data source
 
 #### `refreshData`
