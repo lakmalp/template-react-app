@@ -652,7 +652,7 @@ const FilterSumRow = ({ conf, columns, data, isFilterOn, viewPortBreakpoint }) =
       <td className="px-2" colSpan="3">Filter Totals</td>
       {
         columns
-          .filter(item => (item.visible[viewPortBreakpoint] && (conf.sumColumns.includes(item.name))))
+          .filter(item => (item.visible[viewPortBreakpoint] && item.autosum))
           .filter((item) => item.name !== '_seq_')
           .map(item => <td key={item.name} className="text-right px-2">{numeral(calcFilterSum(item.name)).format('0,0.00')}</td>)
       }
@@ -672,7 +672,7 @@ const ServerSumRow = ({ conf, columns, data, isFilterOn, viewPortBreakpoint }) =
       <td className="px-2 " colSpan="3">Grand Totals</td>
       {
         columns
-          .filter(item => (item.visible[viewPortBreakpoint] && conf.sumColumns.includes(item.name)))
+          .filter(item => (item.visible[viewPortBreakpoint] && item.autosum))
           .filter(item => (item.name !== '_seq_'))
           .map(item => <td key={item.name} className="text-right px-2">{numeral(calcServerSum(item.name)).format('0,0.00')}</td>)
       }

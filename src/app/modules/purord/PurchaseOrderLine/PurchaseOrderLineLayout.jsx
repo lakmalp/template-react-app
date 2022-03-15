@@ -94,7 +94,6 @@ const PurchaseOrderLineLayout = (props) => {
 
   const tableConfig = {
     general: {
-      sumColumns: ["tax", "amount"],
       showGrandSum: true,
       showFilterSum: true,
       addSystemButtonsToSideBar: true

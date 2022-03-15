@@ -37,7 +37,84 @@
 ### Props
 
 #### `configuration`
-table and column configuration details
+table and column configuration details. `id`, `_seq_`, and `_line_no_` are mandatory columns.
+
+```json
+{
+    general: {
+      showGrandSum: true,
+      showFilterSum: true,
+      addSystemButtonsToSideBar: true
+    },
+    columns: [
+      {
+        name: 'id',
+        label: 'ID',
+        type: 'number',
+        align: 'center',
+        length: 30,
+        decimals: 0,
+        visible: { 'xs': false, 'sm': false, 'md': false, 'lg': false, 'xl': false, '2xl': false, '3xl': false },
+        autosum: false
+      },
+      {
+        name: '_seq_',
+        label: '_seq_',
+        type: 'number',
+        align: 'left',
+        length: 70,
+        decimals: 0,
+        visible: { 'xs': false, 'sm': false, 'md': false, 'lg': false, 'xl': false, '2xl': false, '3xl': false },
+        autosum: false
+      },
+      {
+        name: '_line_no_',
+        label: 'Line No',
+        type: 'number',
+        align: 'left',
+        length: 70,
+        decimals: 0,
+        visible: { 'xs': true, 'sm': true, 'md': true, 'lg': true, 'xl': true, '2xl': true, '3xl': true },
+        autosum: false
+      },
+      {
+        name: 'part_code',
+        label: 'Part Code',
+        type: 'string',
+        align: 'left',
+        length: 90,
+        decimals: 0,
+        visible: { 'xs': true, 'sm': true, 'md': true, 'lg': true, 'xl': true, '2xl': true, '3xl': true },
+        autosum: false
+      },
+      {
+        name: 'supplier',
+        label: 'Supplier',
+        type: 'object',
+        align: 'left',
+        length: 320,
+        decimals: 0,
+        visible: { 'xs': false, 'sm': false, 'md': false, 'lg': true, 'xl': true, '2xl': true, '3xl': true },
+        select: ['code', 'description'],
+        concatChar: " - ",
+        autosum: false
+      },
+      {
+        name: 'delivery_date',
+        label: 'Delivery Date',
+        type: 'date',
+        align: 'left',
+        length: 270,
+        decimals: 0,
+        visible: { 'xs': true, 'sm': true, 'md': true, 'lg': true, 'xl': true, '2xl': true, '3xl': true },
+        autosum: false
+      },
+      {
+          /* list of other columns */
+      }
+    ]
+  }
+```
 
 #### `style`
 table styling details
