@@ -184,6 +184,20 @@ export const IconPlus = ({ className, color, width = "auto" }) => {
   )
 }
 
+export const IconFolder = ({ className, color, width = "auto" }) => {
+  return (
+    <svg className={className} width={width} fill={color} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 463 463">
+      <title>folder</title>
+      <g>
+        <path d="M431.5,80H314.784l-30.202-32.718C275.618,37.57,262.896,32,249.679,32H31.5C14.131,32,0,46.131,0,63.5v48v288    C0,416.869,14.131,431,31.5,431h400c17.369,0,31.5-14.131,31.5-31.5v-288C463,94.131,448.869,80,431.5,80z M273.56,57.456    L294.37,80h-27.586l-30.202-32.718c-0.089-0.096-0.184-0.186-0.274-0.282h13.371C258.722,47,267.427,50.811,273.56,57.456z     M201.679,47c9.043,0,17.748,3.811,23.881,10.456L246.37,80h-31.279L184.89,47.282c-0.089-0.096-0.184-0.186-0.274-0.282H201.679z     M31.5,47h118.487c9.043,0,17.747,3.811,23.881,10.456L194.678,80H31.5c-6.046,0-11.698,1.716-16.5,4.681V63.5    C15,54.402,22.402,47,31.5,47z M448,399.5c0,9.098-7.402,16.5-16.5,16.5h-400c-9.098,0-16.5-7.402-16.5-16.5v-288    c0-9.098,7.402-16.5,16.5-16.5h400c9.098,0,16.5,7.402,16.5,16.5V399.5z" />
+        <path d="m399.5,128h-112c-8.547,0-15.5,6.953-15.5,15.5v80c0,8.547 6.953,15.5 15.5,15.5h112c8.547,0 15.5-6.953 15.5-15.5v-80c0-8.547-6.953-15.5-15.5-15.5zm.5,95.5c0,0.276-0.224,0.5-0.5,0.5h-112c-0.276,0-0.5-0.224-0.5-0.5v-80c0-0.276 0.224-0.5 0.5-0.5h112c0.276,0 0.5,0.224 0.5,0.5v80z" />
+        <path d="m375.5,160h-64c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5 7.5,7.5h64c4.142,0 7.5-3.358 7.5-7.5s-3.358-7.5-7.5-7.5z" />
+        <path d="m375.5,192h-64c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5 7.5,7.5h64c4.142,0 7.5-3.358 7.5-7.5s-3.358-7.5-7.5-7.5z" />
+      </g>
+    </svg>
+  )
+}
+
 export const IconTimes = ({ className, color, width = "auto" }) => {
   return (
     <svg className={className} width={width} fill={color} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -340,5 +354,18 @@ export const IconChevronRight = ({ className, color, width }) => {
       <title>chevron-right</title>
       <path id="XMLID_439_" d="M63,46c0,1.1-0.4,2.1-1.2,2.9l-26,25C35,74.6,34,75,33,75c-1.1,0-2.1-0.4-2.9-1.2c-1.5-1.6-1.5-4.1,0.1-5.7 l23-22.1l-23-22.1c-1.6-1.5-1.6-4.1-0.1-5.7c1.5-1.6,4.1-1.6,5.7-0.1l26,25C62.6,43.9,63,44.9,63,46z" />
     </svg>
+  )
+}
+
+export const IconChevronDown = ({ className, color, width }) => {
+  return (
+    <svg className={className} width={width} fill={color} viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chevronDownIconTitle" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" color="#000000">
+      <title>chevron-down</title>
+      <polyline points="6 10 12 16 18 10" />
+    </svg>
+    // <svg className={className} width={width} fill={color} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    //   <title>chevron-down</title>
+    //   <path id="XMLID_439_" d="M63,46c0,1.1-0.4,2.1-1.2,2.9l-26,25C35,74.6,34,75,33,75c-1.1,0-2.1-0.4-2.9-1.2c-1.5-1.6-1.5-4.1,0.1-5.7 l23-22.1l-23-22.1c-1.6-1.5-1.6-4.1-0.1-5.7c1.5-1.6,4.1-1.6,5.7-0.1l26,25C62.6,43.9,63,44.9,63,46z" />
+    // </svg>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import numeral from "numeral";
 import { Button } from "..";
 
@@ -239,11 +239,13 @@ const StandardTable = (props) => {
     }, {})
     setCommandBarButtonsEnabled(_enabled_cmdbar_buttons)
 
-    let _enabled_sidebar_buttons = props.sideBarButtons.reduce((acc, btn) => {
-      let _ret = props.sideBarInquireHandler(filteredData, setFilteredData, selectedLines, btn.action)
-      return { ...acc, [btn.action]: _ret }
-    }, {})
-    setSideBarButtonsEnabled(_enabled_sidebar_buttons)
+    if (props.sideBarButtons) {
+      let _enabled_sidebar_buttons = props.sideBarButtons.reduce((acc, btn) => {
+        let _ret = props.sideBarInquireHandler(filteredData, setFilteredData, selectedLines, btn.action)
+        return { ...acc, [btn.action]: _ret }
+      }, {})
+      setSideBarButtonsEnabled(_enabled_sidebar_buttons)
+    }
   }, [selectedLines, props.disabled])
 
   const [showAdvSearch, setShowAdvSearch] = useState(false);
@@ -363,12 +365,12 @@ const StandardTable = (props) => {
         </thead>
       </table>
       <div className="flex">
-        <div className={(["md", "lg", "xl", "2xl", "3xl"].includes(viewPortBreakpoint) ? "block" : "hidden")}>
+        <div className={(["md", "lg", "xl", "2xl", "3xl"].includes(viewPortBreakpoint) ? (props.sideBarButtons ? "block" : "hidden") : "hidden")}>
           <table style={{ width: cell_width }}>
             <tbody>
               <tr className="" style={{ height: (filterOn ? 56 : 35) }}><td className="border border-transparent" colSpan="100"></td></tr>
               {
-                props.sideBarButtons.map((btn, i) => {
+                props.sideBarButtons && props.sideBarButtons.map((btn, i) => {
                   return (
                     <tr key={`${btn.action}-${i}`} className="h-9">
                       <td
@@ -444,6 +446,7 @@ const StandardTable = (props) => {
                     columns={props.configuration.columns}
                     lineMenuInquireHandler={props.lineMenuInquireHandler}
                     viewPortBreakpoint={viewPortBreakpoint}
+                    columnFormatter={props.columnFormatter}
                   />
                 )
               }
@@ -479,7 +482,7 @@ const Paginator = () => {
   )
 }
 
-const TableDataRow = ({ lineMenu, lineMenuActionHandler, data, columns, isLastRow, rowSelected, toggleRow, lineMenuInquireHandler, viewPortBreakpoint }) => {
+const TableDataRow = ({ lineMenu, lineMenuActionHandler, data, columns, isLastRow, rowSelected, toggleRow, lineMenuInquireHandler, viewPortBreakpoint, columnFormatter }) => {
   const [lineMenuOpen, setLineMenuOpen] = useState(false)
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef)
@@ -489,9 +492,12 @@ const TableDataRow = ({ lineMenu, lineMenuActionHandler, data, columns, isLastRo
   return (
     <tr className={"h-8 transition-colors duration-500 border-t hover:bg-gray-50 " + ((rowSelected || lineMenuOpen) ? "bg-gray-100" : "") + (rowSelected?"border-l":"")}>
       <td className={"text-xs border-la border-ra bg-gray-100a " + (isLastRow ? " " : " ")}>
-        <button className="h-8 w-8 flex justify-center items-center transition-colors " onClick={() => setLineMenuOpen(prev => !prev)}>
-          <Icon icon="VDots" className="" color="gray" width="15" />
-        </button>
+        {
+          lineMenu && 
+          <button className="h-8 w-8 flex justify-center items-center transition-colors " onClick={() => setLineMenuOpen(prev => !prev)}>
+            <Icon icon="VDots" className="" color="gray" width="15" />
+          </button>
+        }
         {
           lineMenuOpen &&
           <div className="z-100 absolute bg-white text-gray-800 border shadow-md min-w-max overflow-hidden " style={{ marginLeft: 30, marginTop: -28 }}>
@@ -500,7 +506,7 @@ const TableDataRow = ({ lineMenu, lineMenuActionHandler, data, columns, isLastRo
               <li className={"px-2 py-1 hover:bg-gray-100 hover:text-gray-900 " + (["md", "lg", "xl", "2xl", "3xl"].includes(viewPortBreakpoint) ? "hidden" : "block")}><button className="w-full text-left flex"><Icon icon="Trash" className="mr-2" width="15" color="rgb(59, 130, 246)" /> Delete</button></li>
               <li><hr /></li>
               {
-                lineMenu.map(item =>
+                lineMenu && lineMenu.map(item =>
                   <li key={item.action} className={"px-2 py-1 " + (lineMenuInquireHandler(item.action, data.id) ? "hover:bg-gray-100" : "")}>
                     <button
                       className={"text-left " + (lineMenuInquireHandler(item.action, data.id) ? "text-gray-700 hover:text-gray-900" : "text-gray-300 cursor-default")}
@@ -550,7 +556,7 @@ const TableDataRow = ({ lineMenu, lineMenuActionHandler, data, columns, isLastRo
                 (isLastRow ? " " : " ") +
                 (((visible_columns.length) === (col_index + 1)) ? "" : "")}
             >
-              {value}
+              {columnFormatter(column.name, value)}
             </td>
           )
         })

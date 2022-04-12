@@ -9,7 +9,7 @@ const routes = [
   },
   {
     path: 'purchaseOrders',
-    page: 'PurchaseOrder/PurchaseOrdersScreen',
+    page: 'PurchaseOrder/PurchaseOrderOverviewScreen',
     folder: 'app/screens',
     isPrivate: true,
     exact: true,

@@ -37,6 +37,16 @@ const theme = {
       enabled: baseTheme.button.default.enabled + " border-gray-200 bg-gradient-to-b from-gray-200 to-gray-300 hover:from-gray-300 hover:border-gray-300 ",
       disabled: baseTheme.button.default.disabled + " border-gray-200 bg-gray-200 pointer-events-none "
     }
+  },
+  detailTable: {
+    commandBarButton: {
+      enabled: "",
+      disabled: ""
+    },
+    sideBarButton: {
+      enabled: "",
+      disabled: ""
+    },
   }
 };
 

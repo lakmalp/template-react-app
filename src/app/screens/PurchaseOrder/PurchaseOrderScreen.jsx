@@ -64,9 +64,6 @@ const PurchaseOrderScreen = (props) => {
 
       case "PurchaseOrderCharge":
         try {
-          // _res = await purchase_order_charge_api.index(id, 0, 0);
-          // data = _res.data.data;
-          // globalState.write(dataSource, data);
           globalState.setLoadingSource();
         } catch (err) {
           console.log(err.message)
