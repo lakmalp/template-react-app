@@ -12,6 +12,9 @@ const PurchaseOrderOverviewScreen = (props) => {
   let globalState = useContext(GlobalStateContext)
 
   useEffect(() => {
+    console.log("------loading PurchaseOrderOverviewScreen----------");
+    globalState.write("PurchaseOrders", []);
+
     EventBus.on("loadHeader", (refresh_id) => {
       globalState.write("PurchaseOrders", []);
       refreshData("PurchaseOrders", refresh_id);

@@ -17,6 +17,7 @@ const Button = ({
   const getClassName = () => {
     return className + ' ' + theme[type][variant][(disabled ? "disabled" : "enabled")]
   }
+  
   return (
     <button
       className={getClassName()}

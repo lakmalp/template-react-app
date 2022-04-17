@@ -16,6 +16,10 @@ const baseTheme = {
       enabled: "py-1 text-xs font-roboto rounded text-black border hover:shadow",
       disabled: "py-1 text-xs font-roboto rounded text-gray-400 border "
     }
+  },
+  textBox: {
+    enabled: "",
+    disabled: ""
   }
 };
 
@@ -47,6 +51,10 @@ const theme = {
       enabled: "",
       disabled: ""
     },
+  },
+  textBox: {
+    enabled: "",
+    disabled: ""
   }
 };
 

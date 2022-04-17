@@ -23,6 +23,7 @@ const StandardTable = (props) => {
 
     return (() => {
       props.containerRef.current.removeEventListener("resize", handleWindowResize);
+      console.log('----- unloading ------');
     })
   }, [])
 
