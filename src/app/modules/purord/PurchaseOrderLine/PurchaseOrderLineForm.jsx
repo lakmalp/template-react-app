@@ -3,6 +3,7 @@ import { DialogBoxConstants } from "../../../../_core/components/DialogBox/Dialo
 import purchase_order_line_api from "./purchase_order_line_api";
 import { decodeError } from "../../../../_core/utilities/exception-handler"
 import { IconLoading } from "../../../../_core/utilities/svg-icons";
+import { Button } from "../../../../_core/components";
 
 const PurchaseOrderLineForm = (props) => {
   const [localData, setLocalData] = useState({ ...props.data });
@@ -45,12 +46,12 @@ const PurchaseOrderLineForm = (props) => {
         res = await purchase_order_line_api.create(localData);
       } else {
         res = await purchase_order_line_api.update(props.data.id, localData);
+        props.clearSelectedLines()
       }
-      props.clearSelectedLines()
-      await props.refreshData();
+      props.refreshData();
       props.callback(DialogBoxConstants.Result.Ok, localData);
     } catch (err) {
-      setApiErrors(JSON.parse(decodeError(err)))
+      setApiErrors(decodeError(err))
       setApiCreating(false);
     }
   }
@@ -96,15 +97,22 @@ const PurchaseOrderLineForm = (props) => {
         </div>
       </div>
       <div className="bg-ss-100 w-full p-2 text-right text-xs mt-3">
-        <button
-          className={"w-28 rounded font-nunito h-7 font-semibold " + (isBtnSaveDisabled ? "bg-gray-100 text-gray-800" : "bg-blue-500 text-white")}
-          onClick={() => save()}
-        >
-          <div className="flex items-center justify-center">
-            {(apiPreparing || apiCreating) && <IconLoading width="15" color="black" className="mr-2 animate-spin" />}
-            {apiPreparing ? <span>Please wait...</span> : (apiCreating ? <span>Saving...</span> : <span>Save</span>)}
-          </div>
-        </button>
+        {/* <Button
+          variant="primary"
+          className="mr-2 h-7 px-2"
+          text="Refresh"
+          callback={() => refresh()}
+          icon={{ component: <IconRefresh />, width: 10 }}
+        /> */}
+
+        <Button
+          variant="primary"
+          className="h-7 px-6"
+          text={(apiCreating ? <span>Saving...</span> : <span>Save</span>)}
+          disabled={isBtnSaveDisabled}
+          animate={(apiPreparing || apiCreating)}
+          callback={() => save()}
+        />
       </div>
     </div>
   )

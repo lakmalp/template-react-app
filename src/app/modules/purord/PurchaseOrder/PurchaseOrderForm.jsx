@@ -14,11 +14,12 @@ const PurchaseOrderForm = (props) => {
   const [localData, setLocalData] = useState(props.data);
   const [status, setStatus] = useState("")
   const [error, setError] = useState()
+  const {mode} = props
 
   useEffect(() => {
-    if (props.mode === "edit") {
+    if (mode === "edit") {
       setLocalData(prev => ({ ...prev, created_date: formatDate(props.data.created_date), delivery_date: formatDate(props.data.delivery_date) }))
-    } else if (props.mode === "create") {
+    } else if (mode === "create") {
       globalState.write("activeDataSource", "PurchaseOrder")
       let res = '';
       (async () => {
@@ -28,7 +29,7 @@ const PurchaseOrderForm = (props) => {
         setStatus("")
       })();
     }
-  }, [props])
+  }, [mode])
 
   const save = async (redirect) => {
     try {

@@ -19,7 +19,7 @@ const PurchaseOrderLayout = (props) => {
   } = props;
 
   useEffect(() => {
-    props_refreshData("");
+    props_refreshData(props_parentId);
   }, [props_parentId])
 
   const cmdEdit_callback = async (result, data) => {

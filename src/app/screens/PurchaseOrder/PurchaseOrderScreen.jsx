@@ -16,10 +16,13 @@ const PurchaseOrderScreen = (props) => {
   let globalState = useContext(GlobalStateContext)
 
   useEffect(() => {
-    EventBus.on("loadHeader", () => {
+    console.log("------loading PurchaseOrderScreen----------");
+    globalState.write("PurchaseOrder", {});
+    globalState.write("PurchaseOrderLine", []);
+    EventBus.on("loadHeader", (refresh_id) => {
       globalState.write("PurchaseOrder", {});
       globalState.write("PurchaseOrderLine", []);
-      refreshData("PurchaseOrder");
+      refreshData("PurchaseOrder", refresh_id);
     }
     );
 
@@ -38,11 +41,11 @@ const PurchaseOrderScreen = (props) => {
           EventBus.dispatch("headerLoading", "");
           EventBus.dispatch("loadingStarted", dataSource);
           globalState.write(dataSource, {});
-          _res = await purchase_order_api.get(id);
+          _res = await purchase_order_api.get(parent_id);
           data = _res.data.data;
           globalState.write(dataSource, data);
           globalState.setLoadingSource();
-          EventBus.dispatch("headerLoadingDone", id);
+          EventBus.dispatch("headerLoadingDone", parent_id);
           EventBus.dispatch("loadingFinished");
         } catch (err) {
           EventBus.dispatch("headerLoadingError", "");
@@ -64,9 +67,6 @@ const PurchaseOrderScreen = (props) => {
 
       case "PurchaseOrderCharge":
         try {
-          // _res = await purchase_order_charge_api.index(id, 0, 0);
-          // data = _res.data.data;
-          // globalState.write(dataSource, data);
           globalState.setLoadingSource();
         } catch (err) {
           console.log(err.message)
@@ -83,7 +83,7 @@ const PurchaseOrderScreen = (props) => {
       <Helmet>
         <title>{`Purchase Order - ${id}`}</title>
       </Helmet>
-      <div className=" w-full" ref={containerRef}>
+      <div id='xxx' className=" w-full " ref={containerRef}>
         <div className="font-montserrat text-md font-semibold text-ss-900 px-2 my-2">
           {`Purchase Order ` + (globalState.loadingSource === "PurchaseOrder" ? "" : `# ${id}`)}
         </div>
