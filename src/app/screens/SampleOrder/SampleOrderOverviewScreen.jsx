@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef } from "react";
 import GlobalStateContext from "../../../_core/providers/GlobalStateContext";
 import EventBus from "../../../_core/utilities/event-bus";
-import PurchaseOrderOverviewLayout from "../../modules/purord/PurchaseOrder/PurchaseOrderOverviewLayout";
-import purchase_order_api from "../../modules/purord/PurchaseOrder/purchase_order_api";
+import SampleOrderOverviewLayout from "../../modules/purord/SampleOrder/SampleOrderOverviewLayout";
+import sample_order_api from "../../modules/purord/SampleOrder/sample_order_api";
 
-const PurchaseOrderOverviewScreen = (props) => {
+const SampleOrderOverviewScreen = (props) => {
   const containerRef = useRef();
   const theme = "blue";
   let globalState = useContext(GlobalStateContext)
 
   useEffect(() => {
-    console.log("------loading PurchaseOrderOverviewScreen----------");
-    globalState.write("PurchaseOrders", []);
+    console.log("------loading SampleOrderOverviewScreen----------");
+    globalState.write("SampleOrders", []);
 
     EventBus.on("loadHeader", (refresh_id) => {
-      globalState.write("PurchaseOrders", []);
-      refreshData("PurchaseOrders", refresh_id);
+      globalState.write("SampleOrders", []);
+      refreshData("SampleOrders", refresh_id);
     }
     );
 
@@ -30,7 +30,7 @@ const PurchaseOrderOverviewScreen = (props) => {
     try {
       globalState.setLoadingSource(dataSource)
       EventBus.dispatch("loadingStarted", dataSource);
-      let _res = await purchase_order_api.query(1, 10, {});
+      let _res = await sample_order_api.query(1, 10, {});
       let data = _res.data.data;
       globalState.write(dataSource, data);
       globalState.setLoadingSource();
@@ -43,19 +43,19 @@ const PurchaseOrderOverviewScreen = (props) => {
   return (
     <>
       <Helmet>
-        <title>Overview - Purchase Orders</title>
+        <title>Overview - Sample Orders</title>
       </Helmet>
       <div className="font-montserrat text-md font-semibold text-ss-900 px-2 my-2 ">
-        {`Purchase Orders`}
+        {`Sample Orders`}
       </div>
       <div ref={containerRef}>
-        <PurchaseOrderOverviewLayout
+        <SampleOrderOverviewLayout
           parent=""
           parentId=""
-          name="PurchaseOrders"
+          name="SampleOrders"
           containerRef={containerRef}
-          data={globalState.read("PurchaseOrders")}
-          refreshData={async (id) => refreshData("PurchaseOrders", id)}
+          data={globalState.read("SampleOrders")}
+          refreshData={async (id) => refreshData("SampleOrders", id)}
           className="mt-4 mb-8 px-2"
           theme={theme}
           disabled={globalState.headerIsLoading}
@@ -65,4 +65,4 @@ const PurchaseOrderOverviewScreen = (props) => {
   )
 }
 
-export default PurchaseOrderOverviewScreen;
+export default SampleOrderOverviewScreen;

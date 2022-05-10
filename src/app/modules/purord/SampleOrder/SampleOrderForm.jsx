@@ -3,12 +3,12 @@ import { Button } from "../../../../_core/components";
 import { DialogBoxConstants } from "../../../../_core/components/DialogBox/DialogBoxPlaceholder";
 import { formatDate } from "../../../../_core/utilities/date-formatting";
 import { IconLoading, IconSave, IconTickInCircle } from "../../../../_core/utilities/svg-icons";
-import purchase_order_api from "./purchase_order_api";
+import sample_order_api from "./sample_order_api";
 import { decodeError } from "../../../../_core/utilities/exception-handler";
 import { useNavigate } from "react-router-dom";
 import GlobalStateContext from "../../../../_core/providers/GlobalStateContext";
 
-const PurchaseOrderForm = (props) => {
+const SampleOrderForm = (props) => {
   const globalState = useContext(GlobalStateContext)
   let navigate = useNavigate();
   const [localData, setLocalData] = useState(props.data);
@@ -20,11 +20,11 @@ const PurchaseOrderForm = (props) => {
     if (mode === "edit") {
       setLocalData(prev => ({ ...prev, created_date: formatDate(props.data.created_date), delivery_date: formatDate(props.data.delivery_date) }))
     } else if (mode === "create") {
-      globalState.write("activeDataSource", "PurchaseOrder")
+      globalState.write("activeDataSource", "SampleOrder")
       let res = '';
       (async () => {
         setStatus("loading")
-        res = await purchase_order_api.prepareCreate();
+        res = await sample_order_api.prepareCreate();
         setLocalData({ ...res.data.data })
         setStatus("")
       })();
@@ -35,16 +35,16 @@ const PurchaseOrderForm = (props) => {
     try {
       setStatus("waiting")
       if (typeof localData.id === 'undefined') {
-        let res = await purchase_order_api.create({ ...localData, created_date: formatDate(localData.created_date), delivery_date: formatDate(localData.delivery_date) })
+        let res = await sample_order_api.create({ ...localData, created_date: formatDate(localData.created_date), delivery_date: formatDate(localData.delivery_date) })
         setStatus("success")
         if (redirect) {
-          navigate(`/purchaseOrders/${res.data.data.id}`);
+          navigate(`/sampleOrders/${res.data.data.id}`);
           props.callback(DialogBoxConstants.Result.Ok, { redirect: true, content: res.data.data })
         } else {
           props.callback(DialogBoxConstants.Result.Ok, { redirect: false, content: res.data.data })
         }
       } else {
-        let res = await purchase_order_api.update(props.data.id, localData)
+        let res = await sample_order_api.update(props.data.id, localData)
         setStatus("success")
         props.callback(DialogBoxConstants.Result.Ok, res.data.data)
       }
@@ -57,7 +57,7 @@ const PurchaseOrderForm = (props) => {
   return (
     <div className={" bg-white " + props.className}>
       <div className="flex font-montserrat text-md font-semibold text-ss-900 px-2 py-2">
-        Purchase Order  {(["loading", "waiting"].includes(status)) && <IconLoading width="15" color="blue" className="ml-2 animate-spin" />}
+        Sample Order  {(["loading", "waiting"].includes(status)) && <IconLoading width="15" color="blue" className="ml-2 animate-spin" />}
       </div>
       <div className="px-2 grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mb-2">
         <div className="font-inter 2xl:col-span-2">
@@ -115,4 +115,4 @@ const PurchaseOrderForm = (props) => {
   )
 }
 
-export default PurchaseOrderForm;
+export default SampleOrderForm;

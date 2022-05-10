@@ -1,4 +1,4 @@
-import PurchaseOrderForm from "./PurchaseOrderForm";
+import SampleOrderForm from "./SampleOrderForm";
 import { IconEdit, IconPlus } from "../../../../_core/utilities/svg-icons"
 import GlobalStateContext from "../../../../_core/providers/GlobalStateContext";
 import { useContext, useEffect } from "react";
@@ -8,7 +8,7 @@ import { ToastContext } from "../../../../_core/providers/ToastContext";
 import { SectionCommandBar } from "../../../../_core/components"
 import { formatDate } from "../../../../_core/utilities/date-formatting";
 
-const PurchaseOrderLayout = (props) => {
+const SampleOrderLayout = (props) => {
   const globalState = useContext(GlobalStateContext)
   let DialogBox = useContext(DialogBoxContext);
   let Toast = useContext(ToastContext)
@@ -30,14 +30,14 @@ const PurchaseOrderLayout = (props) => {
   }
 
   const prepareEdit = () => {
-    globalState.write("activeDataSource", "PurchaseOrder")
+    globalState.write("activeDataSource", "SampleOrder")
     let params = {
       data: { ...globalState.read(props.name) },
       selectedLines: "line_selections",
       mode: "edit"
     };
     let window_size = "sm:w-5/6 md:w-4/6 lg:w-2/4 xl:w-2/5 2xl:w-2/6";
-    DialogBox.showModal(<PurchaseOrderForm />, window_size, params, cmdEdit_callback);
+    DialogBox.showModal(<SampleOrderForm />, window_size, params, cmdEdit_callback);
   }
 
   const cmdCreate_callback = async (result, data) => {
@@ -45,20 +45,20 @@ const PurchaseOrderLayout = (props) => {
       if (data.redirect) {
         // globalState.write(props.name, data.content)
       } else {
-        Toast.show(<span className="font-nunito"><a className="underline" href={`/purchaseOrders/${data.content.po_no}`}>{`Purchase Order ${data.content.po_no}`}</a> {`successfully created.`}</span>, Toast.Constants.Type.Success, Toast.Constants.ModeOfClose.Auto, 4000)
+        Toast.show(<span className="font-nunito"><a className="underline" href={`/sampleOrders/${data.content.po_no}`}>{`Sample Order ${data.content.po_no}`}</a> {`successfully created.`}</span>, Toast.Constants.Type.Success, Toast.Constants.ModeOfClose.Auto, 4000)
       }
     }
   }
 
   const prepareCreate = async () => {
-    //   globalState.write("activeDataSource", "PurchaseOrder")
-    //   let res = await purchase_order_api.prepareCreate();
+    //   globalState.write("activeDataSource", "SampleOrder")
+    //   let res = await sample_order_api.prepareCreate();
     let params = {
       data: {},
       mode: "create"
     };
     let window_size = "sm:w-5/6 md:w-4/6 lg:w-2/4 xl:w-2/5 2xl:w-3/6";
-    DialogBox.showModal(<PurchaseOrderForm />, window_size, params, cmdCreate_callback);
+    DialogBox.showModal(<SampleOrderForm />, window_size, params, cmdCreate_callback);
   }
 
   // const prepareDelete = () => {
@@ -115,4 +115,4 @@ const PurchaseOrderLayout = (props) => {
   )
 }
 
-export default PurchaseOrderLayout;
+export default SampleOrderLayout;

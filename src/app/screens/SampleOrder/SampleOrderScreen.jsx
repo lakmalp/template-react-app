@@ -1,28 +1,28 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import PurchaseOrderLineLayout from '../../modules/purord/PurchaseOrderLine/PurchaseOrderLineLayout';
+import SampleOrderLineLayout from '../../modules/purord/SampleOrderLine/SampleOrderLineLayout';
 import { TabContainer, Tab, TabPane, Panel } from "../../../_core/components";
-import PurchaseOrderLayout from '../../modules/purord/PurchaseOrder/PurchaseOrderLayout';
+import SampleOrderLayout from '../../modules/purord/SampleOrder/SampleOrderLayout';
 import GlobalStateContext from '../../../_core/providers/GlobalStateContext';
-import purchase_order_api from '../../modules/purord/PurchaseOrder/purchase_order_api';
-import purchase_order_line_api from '../../modules/purord/PurchaseOrderLine/purchase_order_line_api';
+import sample_order_api from '../../modules/purord/SampleOrder/sample_order_api';
+import sample_order_line_api from '../../modules/purord/SampleOrderLine/sample_order_line_api';
 import EventBus from "../../../_core/utilities/event-bus"
 import { Helmet } from 'react-helmet-async';
 
-const PurchaseOrderScreen = (props) => {
+const SampleOrderScreen = (props) => {
   let id = useParams().id;
   const theme = "blue";
   const containerRef = useRef();
   let globalState = useContext(GlobalStateContext)
 
   useEffect(() => {
-    console.log("------loading PurchaseOrderScreen----------");
-    globalState.write("PurchaseOrder", {});
-    globalState.write("PurchaseOrderLine", []);
+    console.log("------loading SampleOrderScreen----------");
+    globalState.write("SampleOrder", {});
+    globalState.write("SampleOrderLine", []);
     EventBus.on("loadHeader", (refresh_id) => {
-      globalState.write("PurchaseOrder", {});
-      globalState.write("PurchaseOrderLine", []);
-      refreshData("PurchaseOrder", refresh_id);
+      globalState.write("SampleOrder", {});
+      globalState.write("SampleOrderLine", []);
+      refreshData("SampleOrder", refresh_id);
     }
     );
 
@@ -36,12 +36,12 @@ const PurchaseOrderScreen = (props) => {
     let data = '';
     let _res = '';
     switch (dataSource) {
-      case "PurchaseOrder":
+      case "SampleOrder":
         try {
           EventBus.dispatch("headerLoading", "");
           EventBus.dispatch("loadingStarted", dataSource);
           globalState.write(dataSource, {});
-          _res = await purchase_order_api.get(parent_id);
+          _res = await sample_order_api.get(parent_id);
           data = _res.data.data;
           globalState.write(dataSource, data);
           globalState.setLoadingSource();
@@ -52,10 +52,10 @@ const PurchaseOrderScreen = (props) => {
         }
         break;
 
-      case "PurchaseOrderLine":
+      case "SampleOrderLine":
         try {
           EventBus.dispatch("loadingStarted", dataSource);
-          _res = await purchase_order_line_api.getPOLines(parent_id, 0, 0);
+          _res = await sample_order_line_api.getPOLines(parent_id, 0, 0);
           data = _res.data.data;
           globalState.write(dataSource, data);
           globalState.setLoadingSource();
@@ -65,7 +65,7 @@ const PurchaseOrderScreen = (props) => {
         }
         break;
 
-      case "PurchaseOrderCharge":
+      case "SampleOrderCharge":
         try {
           globalState.setLoadingSource();
         } catch (err) {
@@ -81,20 +81,20 @@ const PurchaseOrderScreen = (props) => {
   return (
     <>
       <Helmet>
-        <title>{`Purchase Order - ${id}`}</title>
+        <title>{`Sample Order - ${id}`}</title>
       </Helmet>
       <div id='xxx' className=" w-full " ref={containerRef}>
         <div className="font-montserrat text-md font-semibold text-ss-900 px-2 my-2">
-          {`Purchase Order ` + (globalState.loadingSource === "PurchaseOrder" ? "" : `# ${id}`)}
+          {`Sample Order ` + (globalState.loadingSource === "SampleOrder" ? "" : `# ${id}`)}
         </div>
         <Panel name="Header">
-          <PurchaseOrderLayout
+          <SampleOrderLayout
             parent=""
             parentId={id}
-            name="PurchaseOrder"
+            name="SampleOrder"
             containerRef={containerRef}
-            data={globalState.read("PurchaseOrder")}
-            refreshData={async (id) => refreshData("PurchaseOrder", id)}
+            data={globalState.read("SampleOrder")}
+            refreshData={async (id) => refreshData("SampleOrder", id)}
             className="mt-4 mb-8 px-2"
             theme={theme}
             disabled={globalState.headerIsLoading}
@@ -102,8 +102,8 @@ const PurchaseOrderScreen = (props) => {
         </Panel>
         <Panel className="px-2" name="PODetails">
           <TabContainer>
-            <Tab target="tabPurchaseOrderLine" label="PO Lines" active />
-            {/* <Tab target="tabPurchaseOrderCharge" label="Charges" />
+            <Tab target="tabSampleOrderLine" label="PO Lines" active />
+            {/* <Tab target="tabSampleOrderCharge" label="Charges" />
           <Tab target="tabPoAddressInfo" label="Addres Info" disabled />
           <Tab target="tabPoJournal" label="PO Journal" disabled={globalState.headerIsLoading} />
           <Tab target="tabTab1" label="Another Tab 1" disabled={globalState.headerIsLoading} />
@@ -113,31 +113,31 @@ const PurchaseOrderScreen = (props) => {
           <Tab target="tabTab5" label="Another Tab 5" disabled={globalState.headerIsLoading} />
           <Tab target="tabTab6" label="Another Tab 6" disabled={globalState.headerIsLoading} /> */}
 
-            <TabPane name="tabPurchaseOrderLine" >
-              <PurchaseOrderLineLayout
-                parent="PurchaseOrder"
+            <TabPane name="tabSampleOrderLine" >
+              <SampleOrderLineLayout
+                parent="SampleOrder"
                 parentId={id}
-                name="PurchaseOrderLine"
+                name="SampleOrderLine"
                 containerRef={containerRef}
-                refreshData={async (id) => refreshData("PurchaseOrderLine", id)}
+                refreshData={async (id) => refreshData("SampleOrderLine", id)}
                 theme={theme}
                 disabled={globalState.headerIsLoading}
               />
             </TabPane>
-            {/* <TabPane name="tabPurchaseOrderCharge">
-            <PurchaseOrderChargeView
-              parent="PurchaseOrder"
+            {/* <TabPane name="tabSampleOrderCharge">
+            <SampleOrderChargeView
+              parent="SampleOrder"
               parentId={id}
-              name="PurchaseOrderCharge"
+              name="SampleOrderCharge"
               containerRef={containerRef}
-              refreshData={async (id) => refreshData("PurchaseOrderCharge", id)}
+              refreshData={async (id) => refreshData("SampleOrderCharge", id)}
               theme={theme}
               disabled={globalState.headerIsLoading}
             />
           </TabPane>
           <TabPane name="tabPoJournal">
             <PoJournalView
-              parent="PurchaseOrder"
+              parent="SampleOrder"
               parentId={id}
               name="PoJournal"
               containerRef={containerRef}
@@ -153,4 +153,4 @@ const PurchaseOrderScreen = (props) => {
   )
 }
 
-export default PurchaseOrderScreen;
+export default SampleOrderScreen;

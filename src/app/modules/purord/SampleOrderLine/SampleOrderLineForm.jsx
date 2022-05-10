@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { DialogBoxConstants } from "../../../../_core/components/DialogBox/DialogBoxPlaceholder";
-import purchase_order_line_api from "./purchase_order_line_api";
+import sample_order_line_api from "./sample_order_line_api";
 import { decodeError } from "../../../../_core/utilities/exception-handler"
 import { IconLoading } from "../../../../_core/utilities/svg-icons";
 import { Button } from "../../../../_core/components";
 
-const PurchaseOrderLineForm = (props) => {
+const SampleOrderLineForm = (props) => {
   const [localData, setLocalData] = useState({ ...props.data });
   const [apiPreparing, setApiPreparing] = useState(false);
   const [apiCreating, setApiCreating] = useState(false);
@@ -19,11 +19,11 @@ const PurchaseOrderLineForm = (props) => {
         let res = "";
         setApiPreparing(true)
         if (props.mode === "new") {
-          res = await purchase_order_line_api.prepareCreate(parent_id, current_sequence, positioning);
+          res = await sample_order_line_api.prepareCreate(parent_id, current_sequence, positioning);
         } else if (props.mode === "edit") {
-          res = await purchase_order_line_api.prepareEdit(props.data.id);
+          res = await sample_order_line_api.prepareEdit(props.data.id);
         } else if (props.mode === "duplicate") {
-          res = await purchase_order_line_api.prepareDuplicate(props.data.id);
+          res = await sample_order_line_api.prepareDuplicate(props.data.id);
         }
         setLocalData(res.data.data)
       } catch (err) {
@@ -43,9 +43,9 @@ const PurchaseOrderLineForm = (props) => {
       let res = "";
       setApiCreating(true);
       if (["new", "duplicate"].includes(props.mode)) {
-        res = await purchase_order_line_api.create(localData);
+        res = await sample_order_line_api.create(localData);
       } else {
-        res = await purchase_order_line_api.update(props.data.id, localData);
+        res = await sample_order_line_api.update(props.data.id, localData);
         props.clearSelectedLines()
       }
       props.refreshData();
@@ -117,4 +117,4 @@ const PurchaseOrderLineForm = (props) => {
     </div>
   )
 }
-export default PurchaseOrderLineForm;
+export default SampleOrderLineForm;

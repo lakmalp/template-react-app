@@ -1,19 +1,19 @@
 const routes = [
   {
-    path: 'purchaseOrders/:id',
-    page: 'PurchaseOrder/PurchaseOrderScreen',
+    path: 'sampleOrders/:id',
+    page: 'SampleOrder/SampleOrderScreen',
     folder: 'app/screens',
     isPrivate: true,
     exact: true,
-    grant: 'purchaseOrder.index'
+    grant: 'sampleOrder.index'
   },
   {
-    path: 'purchaseOrders',
-    page: 'PurchaseOrder/PurchaseOrderOverviewScreen',
+    path: 'sampleOrders',
+    page: 'SampleOrder/SampleOrderOverviewScreen',
     folder: 'app/screens',
     isPrivate: true,
     exact: true,
-    grant: 'purchaseOrder.index'
+    grant: 'sampleOrder.index'
   },
   {
     path: 'temp',
@@ -21,7 +21,7 @@ const routes = [
     folder: 'app/screens',
     isPrivate: true,
     exact: true,
-    grant: 'purchaseOrder.index'
+    grant: 'sampleOrder.index'
   },
 ];
 

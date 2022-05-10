@@ -5,7 +5,7 @@ import { DialogBoxContext } from "../../../../_core/providers/DialogBoxContext";
 import GlobalStateContext from "../../../../_core/providers/GlobalStateContext";
 import { IconPlus, IconDuplicate, IconEdit, IconTrash } from "../../../../_core/utilities/svg-icons";
 
-const PurchaseOrderOverviewLayout = (props) => {
+const SampleOrderOverviewLayout = (props) => {
   let globalState = useContext(GlobalStateContext)
   let {
     parentId: props_parentId,
@@ -284,7 +284,7 @@ const PurchaseOrderOverviewLayout = (props) => {
   //       </thead>
   //       <tbody>
   //         {
-  //           data?.map((row, i) => <tr className="font-nunito text-sm border-b hover:bg-yellow-100"><td key={i}><Link to={`/purchaseOrders/${row.po_no}`}>{row.po_no}</Link></td></tr>)
+  //           data?.map((row, i) => <tr className="font-nunito text-sm border-b hover:bg-yellow-100"><td key={i}><Link to={`/sampleOrders/${row.po_no}`}>{row.po_no}</Link></td></tr>)
   //         }
   //       </tbody>
   //     </table>
@@ -292,4 +292,4 @@ const PurchaseOrderOverviewLayout = (props) => {
   // )
 }
 
-export default PurchaseOrderOverviewLayout;
+export default SampleOrderOverviewLayout;

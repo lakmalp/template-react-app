@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { DialogBoxContext } from "../../../../_core/providers/DialogBoxContext";
-import PurchaseOrderLineForm from "./PurchaseOrderLineForm";
+import SampleOrderLineForm from "./SampleOrderLineForm";
 import GlobalStateContext from "../../../../_core/providers/GlobalStateContext";
-import purchase_order_line_api from "./purchase_order_line_api";
+import sample_order_line_api from "./sample_order_line_api";
 import { decodeError } from "../../../../_core/utilities/exception-handler";
 import EventBus from "../../../../_core/utilities/event-bus"
 import { IconPlus, IconDuplicate, IconEdit, IconTrash } from "../../../../_core/utilities/svg-icons";
 import { StandardTable } from "../../../../_core/components/PremiaTables";
 
-const PurchaseOrderLineLayout = (props) => {
+const SampleOrderLineLayout = (props) => {
   let DialogBox = useContext(DialogBoxContext);
   let globalState = useContext(GlobalStateContext)
   const [apiErrors, setApiErrors] = useState({})
@@ -355,8 +355,8 @@ const PurchaseOrderLineLayout = (props) => {
     switch (action) {
       case "cmdNewRecord":
         let max_seq = 0;
-        if (globalState.read("PurchaseOrderLine").length > 0) {
-          max_seq = Math.max(...globalState.read("PurchaseOrderLine").map(item => item._seq_));
+        if (globalState.read("SampleOrderLine").length > 0) {
+          max_seq = Math.max(...globalState.read("SampleOrderLine").map(item => item._seq_));
         }
         await prepareCreate(max_seq, "bottom");
         break;
@@ -391,7 +391,7 @@ const PurchaseOrderLineLayout = (props) => {
       refreshData: async () => props.refreshData(globalState.read(props.parent).id)
     };
     let window_size = "sm:w-5/6 md:w-4/6 lg:w-2/4 xl:w-2/5 2xl:w-2/6";
-    DialogBox.showModal(<PurchaseOrderLineForm />, window_size, params, cmdNewRecord_callback);
+    DialogBox.showModal(<SampleOrderLineForm />, window_size, params, cmdNewRecord_callback);
   }
 
   const cmdNewRecord_callback = async (result, data) => {
@@ -406,7 +406,7 @@ const PurchaseOrderLineLayout = (props) => {
       clearSelectedLines: () => setSelectedLines([])
     };
     let window_size = "sm:w-5/6 md:w-4/6 lg:w-2/4 xl:w-2/5 2xl:w-2/6";
-    DialogBox.showModal(<PurchaseOrderLineForm />, window_size, params, cmdEditRecord_callback);
+    DialogBox.showModal(<SampleOrderLineForm />, window_size, params, cmdEditRecord_callback);
   }
 
   const cmdEditRecord_callback = async (result, data) => {
@@ -414,7 +414,7 @@ const PurchaseOrderLineLayout = (props) => {
   }
 
   const lineMenuInsert = async ([id], positioning) => {
-    let curr_seq = [...globalState.read("PurchaseOrderLine")]?.filter(item => item.id === id).map(item => item._seq_)[0];
+    let curr_seq = [...globalState.read("SampleOrderLine")]?.filter(item => item.id === id).map(item => item._seq_)[0];
     await prepareCreate(curr_seq, positioning);
   }
 
@@ -431,7 +431,7 @@ const PurchaseOrderLineLayout = (props) => {
       clearSelectedLines: () => setSelectedLines([])
     };
     let window_size = "sm:w-5/6 md:w-4/6 lg:w-2/4 xl:w-2/5 2xl:w-2/6";
-    DialogBox.showModal(<PurchaseOrderLineForm />, window_size, params, cmdDuplicateRecord_callback);
+    DialogBox.showModal(<SampleOrderLineForm />, window_size, params, cmdDuplicateRecord_callback);
   }
 
   const cmdDeleteSelected_Clicked = async (data, setData, selectedLines, setSelectedLines) => {
@@ -440,7 +440,7 @@ const PurchaseOrderLineLayout = (props) => {
     if (ret) {
       try {
         [...selectedLines].forEach(async (id) => {
-          await purchase_order_line_api.delete(id);
+          await sample_order_line_api.delete(id);
           availableRecs = availableRecs.filter(item => item.id !== id)
           globalState.write(props.name, availableRecs)
           setSelectedLines(prev => prev.filter(item => item !== id))
@@ -482,4 +482,4 @@ const PurchaseOrderLineLayout = (props) => {
   )
 }
 
-export default PurchaseOrderLineLayout;
+export default SampleOrderLineLayout;
