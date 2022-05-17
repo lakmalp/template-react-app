@@ -1,4 +1,4 @@
-import PurchaseOrderScreen from "./PurchaseOrderScreen";
-import PurchaseOrderOverviewScreen from "./PurchaseOrderOverviewScreen";
+import SampleOrderScreen from "./SampleOrderScreen";
+import SampleOrderOverviewScreen from "./SampleOrderOverviewScreen";
 
-export { PurchaseOrderScreen, PurchaseOrderOverviewScreen };
+export { SampleOrderScreen, SampleOrderOverviewScreen };

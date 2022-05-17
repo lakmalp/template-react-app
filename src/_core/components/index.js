@@ -12,6 +12,7 @@ import PrivateAppShell from "./PrivateAppShell/PrivateAppShell";
 import PublicAppShell from "./PublicAppShell/PublicAppShell";
 import Sidebar from "./Sidebar";
 import Panel from "./Panel";
+import TextBox from "./TextBox";
 
 export {
   TabContainer,
@@ -29,5 +30,6 @@ export {
   PrivateAppShell,
   PublicAppShell,
   Sidebar,
-  Panel
+  Panel,
+  TextBox
 };

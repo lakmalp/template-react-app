@@ -2,17 +2,20 @@ import { ProtectedRoute } from "./_core/components/index";
 
 import {
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 import { PrivateAppShell, PublicAppShell } from "./_core/components/index"
 import base_routes from "./_core/base-routes"
 import app_routes from "./app/routes"
-import React, { Suspense, useRef } from 'react';
+import React, { Suspense, useRef, useContext } from 'react';
 import NotFound from "./_core/screens/NotFound"
+import AuthContext from "./_core/providers/AuthContext";
 
 function App() {
   let _routes = [];
   let hasRootRef = useRef(false);
+  let auth = useContext(AuthContext);
 
   hasRootRef.current = app_routes.reduce((acc, cur) => {
     acc = acc || (cur.path === '/')
@@ -51,7 +54,7 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    <PublicLazyComponent page={route.page} folder={route.folder} />
+                    (auth.isAuthed && route.path !== "login") ? <PublicLazyComponent page={route.page} folder={route.folder} /> : <Navigate to="/" replace />
                   }
                 />
               )

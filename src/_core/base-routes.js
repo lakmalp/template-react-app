@@ -23,6 +23,46 @@ let routes = [
     exact: true,
     grant: 'auth.home'
   },
+  {
+    path: '/users',
+    page: 'User',
+    folder: '_core/screens',
+    isPrivate: true,
+    exact: true,
+    grant: 'settings.modifyUsers'
+  },
+  {
+    path: '/roles',
+    page: 'Role',
+    folder: '_core/screens',
+    isPrivate: true,
+    exact: true,
+    grant: 'settings.modifyRoles'
+  },
+  {
+    path: '/userRoles',
+    page: 'UserRole',
+    folder: '_core/screens',
+    isPrivate: true,
+    exact: true,
+    grant: 'settings.modifyUserRoles'
+  },
+  {
+    path: '/rolePermissions',
+    page: 'RolePermission',
+    folder: '_core/screens',
+    isPrivate: true,
+    exact: true,
+    grant: 'settings.modifyUserRoles'
+  },
+  {
+    path: '/systemParameters',
+    page: 'SystemParamater',
+    folder: '_core/screens',
+    isPrivate: true,
+    exact: true,
+    grant: 'settings.modifySystemParameters'
+  },
 ];
 
 export default routes

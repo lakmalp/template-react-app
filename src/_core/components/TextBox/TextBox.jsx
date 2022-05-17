@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import theme from "../../theme";
 
 const TextBox = ({
+  value,
   title,
   disabled,
   className,
@@ -12,22 +13,24 @@ const TextBox = ({
 }) => {
 
   const getClassName = () => {
-    return className + ' ' + theme.textBox[(disabled ? "disabled" : "enabled")]
+    return className + ' text-' + textAlign  + ' ' + theme.textBox[(disabled ? "disabled" : "enabled")]
   }
   
   return (
     <input
+      value={value}
       type="text"
-      //title
+      title={title}
       disabled={disabled}
       className={getClassName()}
-      //onChange
-      //onBlur
+      onChange={e => onChangeCallback(e)}
+      onBlur={e => onBlurCallback(e)}
     />
   )
 }
 
 TextBox.propTypes = {
+  value: PropTypes.string, 
   title: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string

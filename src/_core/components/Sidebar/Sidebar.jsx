@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IconChevronRight } from "../../utilities/svg-icons";
 import backdropimg from "../../../assets/raindrops.png"
+import AuthContext from "../../providers/AuthContext";
 
 const Sidebar = () => {
   let banner_height = 70;
   let alert_count = 5;
+  let auth = useContext(AuthContext);
+  const [permissions, setPermissions] = useState([]);
+
+  useEffect(() => {
+    if (auth.isAuthed) {
+      if (Array.isArray(auth.permissions)) {
+        setPermissions(
+          auth.permissions.map(item => item.code)
+        )
+      }
+    }
+  }, [auth.isAuthed, auth.permissions])
+  
   return (
     <div className="relative" style={{ minWidth: "15rem" }}>
       {/* <section className="absolute h-screen  bg-sky-900 flex items-end">
@@ -15,6 +29,16 @@ const Sidebar = () => {
         <Banner height={banner_height} />
         <div style={{ height: `calc(100vh - ${banner_height}px)` }}>
           <Section className="h-full overflow-y-scroll overflow-x-hidden sidebarscroller" collapsed={false} label="Navigator">
+            {
+              auth.isAuthed &&
+              <Folder label="Settings">
+                  {permissions.includes("settings.modifyUsers") && <Node to="/users" label="Users" />}
+                  {permissions.includes("settings.modifyRoles") && <Node to="/roles" label="Roles" />}
+                  {permissions.includes("settings.modifyUserRoles") && <Node to="/userRoles" label="Roles per User" />}
+                  {permissions.includes("settings.modifyRolePermissions") && <Node to="/rolePermissions" label="Permissions per Role" />}
+                  {permissions.includes("settings.modifySystemParameters") && <Node to="/systemParameters" label="System Parameters" />}
+              </Folder>
+            }
             <Folder label="Purchasing">
               <Folder label="Purchase Order">
                 <Folder label="Charges">

@@ -18,8 +18,8 @@ const baseTheme = {
     }
   },
   textBox: {
-    enabled: "",
-    disabled: ""
+    enabled: "h-7 border rounded px-1 focus:outline-none font-roboto",
+    disabled: "h-7 border rounded px-1 disabled focus:outline-none font-roboto"
   }
 };
 
@@ -53,8 +53,8 @@ const theme = {
     },
   },
   textBox: {
-    enabled: "",
-    disabled: ""
+    enabled: baseTheme.textBox.enabled + "",
+    disabled: baseTheme.textBox.disabled + ""
   }
 };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import auth_api from '../api/auth_api';
 import { decodeError } from '../utilities/exception-handler';
 import { useNavigate, useLocation } from "react-router-dom";
+import permission_api from '../api/permission_api';
 
 export const AuthContext = React.createContext();
 
@@ -11,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthWaiting, setIsAuthWaiting] = useState(true);
   const [isPingingServer, setIsPingingServer] = useState(true);
   const [user, setUser] = useState();
+  const [permissions, setPermissions] = useState();
   const [authError, setAuthError] = useState("");
 
   let navigate = useNavigate();
@@ -22,8 +24,10 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsAuthWaiting(true)
       let res = await auth_api.login(email, password);
-      res = await auth_api.user();
-      setUser(res.data)
+      let user_res = await auth_api.user();
+      let perm_res = await permission_api.index();
+      setPermissions(perm_res.data.data);
+      setUser(user_res.data)
       setIsAuthed(true)
       setAuthError("");
       navigate(from, { replace: true });
@@ -72,6 +76,8 @@ export const AuthProvider = ({ children }) => {
         setIsServerAvailable(true)
         setIsAuthWaiting(true)
         let res = await auth_api.user();
+        let perm_res = await permission_api.index();
+        setPermissions(perm_res.data.data);
         setUser(res.data)
         setIsAuthed(true)
         setAuthError("");
@@ -95,6 +101,7 @@ export const AuthProvider = ({ children }) => {
         authError: authError,
         isAuthed: isAuthed,
         user: user,
+        permissions: permissions,
         register: (name, email, password) => register(name, email, password),
         login: (email, password) => login(email, password),
         logout: () => logout()
