@@ -54,7 +54,14 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    (auth.isAuthed && route.path !== "login") ? <PublicLazyComponent page={route.page} folder={route.folder} /> : <Navigate to="/" replace />
+                    // auth.isAuthWaiting ?
+                    //   <PublicLazyComponent page={route.page} folder={route.folder} />
+                    //   :
+                    (auth.isAuthed && route.path === "/login") ?
+                      <Navigate to="/" replace />
+                      :
+                      <PublicLazyComponent page={route.page} folder={route.folder} />
+                    // <PublicLazyComponent page={route.page} folder={route.folder} />
                   }
                 />
               )

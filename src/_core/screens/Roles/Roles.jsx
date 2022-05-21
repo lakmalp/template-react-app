@@ -1,7 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet-async";
 
-const Role = () => {
+const Roles = () => {
   return (
     <>
       <Helmet>
@@ -12,4 +12,4 @@ const Role = () => {
   );
 }
 
-export default Role;
+export default Roles;

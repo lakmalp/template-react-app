@@ -32,7 +32,7 @@ const Sidebar = () => {
             {
               auth.isAuthed &&
               <Folder label="Settings">
-                  {permissions.includes("settings.modifyUsers") && <Node to="/users" label="Users" />}
+                  {permissions.includes("settings.modifyUsers") && <Node to="/userProfiles" label="User Profiles" />}
                   {permissions.includes("settings.modifyRoles") && <Node to="/roles" label="Roles" />}
                   {permissions.includes("settings.modifyUserRoles") && <Node to="/userRoles" label="Roles per User" />}
                   {permissions.includes("settings.modifyRolePermissions") && <Node to="/rolePermissions" label="Permissions per Role" />}

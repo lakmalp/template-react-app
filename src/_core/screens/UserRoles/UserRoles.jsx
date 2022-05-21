@@ -1,15 +1,15 @@
 import React from "react"
 import { Helmet } from "react-helmet-async";
 
-const UserRole = () => {
+const UserRoles = () => {
   return (
     <>
       <Helmet>
-        <title>UserRole</title>
+        <title>User Roles</title>
       </Helmet>
-      UserRole
+      User Roles
     </>
   );
 }
 
-export default UserRole;
+export default UserRoles;

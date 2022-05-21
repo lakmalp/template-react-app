@@ -1,15 +1,15 @@
 import React from "react"
 import { Helmet } from "react-helmet-async";
 
-const SystemParamater = () => {
+const RolePermissions = () => {
   return (
     <>
       <Helmet>
-        <title>SystemParamater</title>
+        <title>Role Permissions</title>
       </Helmet>
-      SystemParamater
+      Role Permissions
     </>
   );
 }
 
-export default SystemParamater;
+export default RolePermissions;
