@@ -21,6 +21,10 @@ const baseTheme = {
       disabled: "py-1 text-xs font-roboto rounded text-gray-400 border "
     }
   },
+  link: {
+    enabled: "text-xs font-roboto underline text-blue-400",
+    disabled: "text-xs font-roboto text-gray-500 "
+  },
   textBox: {
     enabled: "h-7 border rounded px-1 focus:outline-none font-roboto",
     disabled: "h-7 border rounded px-1 disabled focus:outline-nonea font-roboto"
@@ -49,6 +53,10 @@ const theme = {
       enabled: baseTheme.button.default.enabled + " border-gray-200 bg-gradient-to-b from-gray-200 to-gray-300 hover:from-gray-300 hover:border-gray-300 ",
       disabled: baseTheme.button.default.disabled + " border-gray-200 bg-gray-200 pointer-events-none "
     }
+  },
+  link: {
+    enabled: baseTheme.link.enabled + "",
+    disabled: baseTheme.link.disabled + ""
   },
   detailTable: {
     commandBarButton: {

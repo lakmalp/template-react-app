@@ -2,7 +2,7 @@ import { useContext } from "react"
 import GlobalStateContext from "../../providers/GlobalStateContext"
 import { IconLoading } from "../../utilities/svg-icons";
 
-export default function ApiWaiting() {
+const ApiWaiting = () => {
   let globalState = useContext(GlobalStateContext);
 
   return (
@@ -15,3 +15,5 @@ export default function ApiWaiting() {
     </div >
   )
 }
+
+export default ApiWaiting;

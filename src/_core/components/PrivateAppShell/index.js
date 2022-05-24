@@ -1,3 +1,1 @@
-import PrivateAppShell from "./PrivateAppShell"
-
-export default PrivateAppShell;
+export {default} from "./PrivateAppShell";

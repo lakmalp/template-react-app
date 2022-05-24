@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthContext";
 import { IconLoading } from "../../utilities/svg-icons";
 
-export const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   let auth = useContext(AuthContext);
   let location = useLocation();
 
@@ -15,3 +15,5 @@ export const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 }
+
+export default ProtectedRoute;

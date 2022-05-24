@@ -1,3 +1,1 @@
-import PublicAppShell from "./PublicAppShell"
-
-export default PublicAppShell;
+export { default } from "./PublicAppShell";

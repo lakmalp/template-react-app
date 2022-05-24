@@ -15,13 +15,17 @@ const Button = ({
 }) => {
 
   const getClassName = () => {
-    return className + ' ' + theme[type][variant][(disabled ? "disabled" : "enabled")]
+    if (type === "link") {
+      return className + ' ' + theme[type][(disabled ? "disabled" : "enabled")]
+    } else {
+      return className + ' ' + theme[type][variant][(disabled ? "disabled" : "enabled")]
+    }
   }
   
   return (
     <button
       className={getClassName()}
-      onClick={() => callback()}
+      onClick={callback}
       disabled={disabled}
     >
       <div className='flex justify-center items-center'>
@@ -29,7 +33,7 @@ const Button = ({
           icon && !animate && <LazyIcon icon={icon.component} width={icon.width} className={" " + (animate ? "animate-spin-slow" : "")} color={disabled ? "#fff" : "#fff"} />
         }
         {
-          animate && <IconLoading className=" animate-spin mr-2" width="15" color="white" />
+          animate && <IconLoading className=" animate-spin mr-2 " width="15" color="white" />
         }
         {text && <span className={(icon?"ml-2":"")}>{text}</span>}
       </div>

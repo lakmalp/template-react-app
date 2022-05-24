@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from 'prop-types';
 import theme from "../../theme";
 
-const TextBox = ({
+const TextField = ({
+  name,
   value,
   title,
   disabled,
@@ -11,13 +12,13 @@ const TextBox = ({
   onChangeCallback,
   onBlurCallback
 }) => {
-
   const getClassName = () => {
     return className + ' text-' + textAlign  + ' ' + theme.textBox[(disabled ? "disabled" : "enabled")]
   }
   
   return (
     <input
+      name={name}
       value={value}
       type="text"
       title={title}
@@ -29,21 +30,13 @@ const TextBox = ({
   )
 }
 
-TextBox.propTypes = {
-  value: PropTypes.string, 
+TextField.propTypes = {
   title: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string
-  // textAlign:
-  // onChangeCallback: 
-  // onBlurCallback:
 };
 
-TextBox.defaultProps = {
-  // title:
-  // disabled:
-  // className:
-  // textAlign:
+TextField.defaultProps = {
 }
 
-export default TextBox;
+export default TextField;

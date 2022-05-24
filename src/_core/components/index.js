@@ -1,18 +1,18 @@
 import { TabContainer, Tab, TabPane } from "./Tabber";
 import { DialogBoxPlaceholder } from "./DialogBox"
-import MainCommandBar from "./MainCommandBar/MainCommandBar"
-import BreadCrumbs from "./BreadCrumbs/BreadCrumbs"
+import MainCommandBar from "./MainCommandBar"
+import BreadCrumbs from "./BreadCrumbs"
 import ToastContainer from "./Toast/ToastContainer"
-import SectionCommandBar from "./SectionCommandBar/SectionCommandBar"
-import Button from "./Button/Button"
-import Loader from "./Loader/Loader"
-import ApiWaiting from "./ApiWaiting/ApiWaiting"
-import { ProtectedRoute } from "./ProtectedRoute/ProtectedRoute"
-import PrivateAppShell from "./PrivateAppShell/PrivateAppShell";
-import PublicAppShell from "./PublicAppShell/PublicAppShell";
+import SectionCommandBar from "./SectionCommandBar"
+import Button from "./Button"
+import Loader from "./Loader"
+import ApiWaiting from "./ApiWaiting"
+import ProtectedRoute from "./ProtectedRoute"
+import PrivateAppShell from "./PrivateAppShell";
+import PublicAppShell from "./PublicAppShell";
 import Sidebar from "./Sidebar";
 import Panel from "./Panel";
-import TextBox from "./TextBox";
+import TextField from "./TextField";
 
 export {
   TabContainer,
@@ -31,5 +31,5 @@ export {
   PublicAppShell,
   Sidebar,
   Panel,
-  TextBox
+  TextField
 };
