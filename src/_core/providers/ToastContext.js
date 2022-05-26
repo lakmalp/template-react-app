@@ -28,7 +28,7 @@ export const ToastProvider = ({ children }) => {
           }
         },
         stack: stack,
-        show: (comp, type, modeOfClose, duration = 1000) => {
+        show: (comp, type, modeOfClose = "auto", duration = 3000) => {
           let next_window_id = windowId + 1;
           setWindowId(next_window_id);
           setStack(prev => {

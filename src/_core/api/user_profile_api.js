@@ -13,6 +13,9 @@ const user_profile_api = {
   create: (data) => {
     return api().post(`/api/userProfiles`, data)
   },
+  update: (id, data) => {
+    return api().patch(`/api/userProfiles/${id}`, data)
+  },
 }
 
 export default user_profile_api;

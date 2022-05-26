@@ -30,7 +30,7 @@ const Button = ({
     >
       <div className='flex justify-center items-center'>
         {
-          icon && !animate && <LazyIcon icon={icon.component} width={icon.width} className={" " + (animate ? "animate-spin-slow" : "")} color={disabled ? "#fff" : "#fff"} />
+          icon && !animate && <LazyIcon icon={icon.component} width={icon.width} className={" " + (animate ? "animate-spin-slow" : "")} color={disabled ? "#aaa" : icon.color} />
         }
         {
           animate && <IconLoading className=" animate-spin mr-2 " width="15" color="white" />
