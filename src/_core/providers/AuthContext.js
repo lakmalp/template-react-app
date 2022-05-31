@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import auth_api from '../api/auth_api';
 import { decodeError } from '../utilities/exception-handler';
 import { useNavigate, useLocation } from "react-router-dom";
@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [permissions, setPermissions] = useState();
   const [authError, setAuthError] = useState("");
+  const heartBeatHandleRef = useRef();
 
   let navigate = useNavigate();
   let location = useLocation();
@@ -58,6 +59,7 @@ export const AuthProvider = ({ children }) => {
       setUser()
       setIsAuthed(false)
       setAuthError("");
+      clearInterval(heartBeatHandleRef.current);
       navigate("/login");
     } catch (err) {
       setAuthError(decodeError(err).message)
@@ -67,7 +69,20 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const checkHeartBeat = async (location, auth_api) => {
+    if ((typeof location.pathname !== 'undefined') && (location.pathname !== '/login')) {
+      try {
+        let res = await auth_api.user();
+      } catch (e) {
+        setIsAuthed(false);
+        navigate("/login");
+      }
+    }
+  }
+
   useEffect(() => {
+    heartBeatHandleRef.current = setInterval(checkHeartBeat, 50000, location, auth_api);
+
     (async () => {
       try {
         setIsPingingServer(true)

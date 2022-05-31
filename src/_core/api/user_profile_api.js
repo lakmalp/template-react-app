@@ -7,6 +7,9 @@ const user_profile_api = {
   list: (query_params) => {
     return api().get("/api/userProfiles/list", { params: query_params })
   },
+  withUser: (query_params) => {
+    return api().get("/api/userProfiles/withUser", { params: query_params })
+  },
   get: (id) => {
     return api().get(`/api/userProfiles/${id}`)
   },
