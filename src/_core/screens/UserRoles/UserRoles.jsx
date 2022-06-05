@@ -192,10 +192,6 @@ const UserRoles = () => {
 }
 
 const Cell = ({ state }) => {
-  useEffect(() => {
-    console.log((new Date()).getTime() + ": " + state);
-  }, [state])
-
   return (
     <>
       {

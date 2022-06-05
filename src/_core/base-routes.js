@@ -24,7 +24,7 @@ let routes = [
     grant: 'auth.home'
   },
   {
-    path: '/userProfiles',
+    path: '/settings/userProfiles',
     page: 'UserProfiles',
     folder: '_core/screens',
     isPrivate: true,
@@ -32,7 +32,7 @@ let routes = [
     grant: 'settings.modifyUsers'
   },
   {
-    path: '/roles',
+    path: '/settings/security/roles',
     page: 'Roles',
     folder: '_core/screens',
     isPrivate: true,
@@ -40,7 +40,7 @@ let routes = [
     grant: 'settings.modifyRoles'
   },
   {
-    path: '/userRoles',
+    path: '/settings/security/userRoles',
     page: 'UserRoles',
     folder: '_core/screens',
     isPrivate: true,
@@ -48,7 +48,7 @@ let routes = [
     grant: 'settings.modifyUserRoles'
   },
   {
-    path: '/rolePermissions',
+    path: '/settings/security/rolePermissions',
     page: 'RolePermissions',
     folder: '_core/screens',
     isPrivate: true,
@@ -56,7 +56,7 @@ let routes = [
     grant: 'settings.modifyUserRoles'
   },
   {
-    path: '/systemParameters',
+    path: '/settings/systemParameters',
     page: 'SystemParamaters',
     folder: '_core/screens',
     isPrivate: true,

@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Children, useState, useContext, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { IconChevronRight } from "../../utilities/svg-icons";
-import backdropimg from "../../../assets/raindrops.png"
+// import backdropimg from "../../../assets/raindrops.png"
 import AuthContext from "../../providers/AuthContext";
 
 const Sidebar = () => {
@@ -19,7 +19,7 @@ const Sidebar = () => {
       }
     }
   }, [auth.isAuthed, auth.permissions])
-  
+
   return (
     <div className="relative" style={{ minWidth: "15rem" }}>
       {/* <section className="absolute h-screen  bg-sky-900 flex items-end">
@@ -28,31 +28,34 @@ const Sidebar = () => {
       <nav className='absolute border-r bg-sky-900 text-gray-800 font-publicSans text-xs h-screen' style={{ minWidth: "15rem" }}>
         <Banner height={banner_height} />
         <div style={{ height: `calc(100vh - ${banner_height}px)` }}>
-          <Section className="h-full overflow-y-scroll overflow-x-hidden sidebarscroller" collapsed={false} label="Navigator">
+          <Section className="h-full overflow-y-scroll overflow-x-hidden sidebarscroller w-full" collapsed={false} label="Navigator">
             {
               auth.isAuthed &&
-              <Folder label="Settings">
-                  {permissions.includes("settings.modifyUsers") && <Node to="/userProfiles" label="User Profiles" />}
-                  {permissions.includes("settings.modifyRoles") && <Node to="/roles" label="Roles" />}
-                  {permissions.includes("settings.modifyUserRoles") && <Node to="/userRoles" label="Roles per User" />}
-                  {permissions.includes("settings.modifyRolePermissions") && <Node to="/rolePermissions" label="Permissions per Role" />}
-                  {permissions.includes("settings.modifySystemParameters") && <Node to="/systemParameters" label="System Parameters" />}
+              <Folder path="settings" label="Settings">
+                {permissions.includes("settings.modifyUsers") && <Node path="userProfiles" label="User Profiles" />}
+                <Folder path="security" label="Security">
+                  {permissions.includes("settings.modifyRoles") && <Node path="roles" label="Roles" />}
+                  {permissions.includes("settings.modifyUserRoles") && <Node path="userRoles" label="Roles per User" />}
+                  {permissions.includes("settings.modifyRolePermissions") && <Node path="rolePermissions" label="Permissions per Role" />}
+                </Folder>
+                {permissions.includes("settings.modifySystemParameters") && <Node path="systemParameters" label="System Parameters" />}
               </Folder>
             }
-            <Folder label="Purchasing">
-              <Folder label="Purchase Order">
-                <Folder label="Charges">
-                  <Node to="/purchaseOrderCharges" label="Purchase Order Charges" />
+            <Folder path="purchase" label="Purchase">
+              <Folder path="purchaseOrder" label="Purchase Order">
+                <Folder path="charges" label="Charges">
+                  <Node path="purchaseOrderCharges" label="Purchase Order Charges" />
+                  <Node path="inventoryParts" label="Inventory Parts" />
                 </Folder>
-                <Node to="/purchaseOrders" label="Purchase Orders" />
+                <Node path="purchaseOrders" label="Purchase Orders" />
               </Folder>
-              <Folder label="Part">
-                <Node to="/purchaseParts" label="Purchase Parts" />
+              <Folder path="part" label="Part">
+                <Node path="purchaseParts" label="Purchase Parts" />
               </Folder>
             </Folder>
-            <Folder label="Inventory">
-              <Node to="/inventoryParts" label="Inventory Parts" />
-              <Node to="/warehouses" label="Warehouses" />
+            <Folder path="inventory" label="Inventory">
+              <Node path="inventoryParts" label="Inventory Parts" />
+              <Node path="warehouses" label="Warehouses" />
             </Folder>
           </Section>
           <Footer>
@@ -73,7 +76,14 @@ const Banner = ({ height }) => {
 }
 
 const Folder = (props) => {
+  let location = useLocation();
   const [folderCollapsed, setFolderCollapsed] = useState(true);
+
+  useEffect(() => {
+    if (location.pathname.split("/").includes(props.path)) {
+      setFolderCollapsed(false);
+    };
+  }, [location.pathname, props.path])
 
   const collapseFolder = (e, val) => {
     e.stopPropagation();
@@ -81,15 +91,24 @@ const Folder = (props) => {
   }
 
   return (
-    <ul className=" w-full rounded pt-1">
+    <div className=" w-full rounded pt-1">
       <div className={"py-1 px-1 flex justify-between items-center text-white cursor-default " + (folderCollapsed ? "" : "bg-sky-800a")} onClick={(e) => collapseFolder(e, !folderCollapsed)}>
         <span className="">{props.label}</span>
         <span className={"transition-all duration-300 " + (folderCollapsed ? "" : "rotate-90")}><IconChevronRight width="12" color="white" /></span>
       </div>
-      <div className={(folderCollapsed ? "hidden" : "ml-2")}>
-        {props.children}
+      <div className={(folderCollapsed ? "hidden" : "ml-2 w-full")}>
+        {
+          Children.map(props.children, (child, index) => {
+            if (React.isValidElement(child)) {
+              return React.cloneElement(child, {
+                parentPath: props.parentPath ? (props.parentPath + "/" + props.path) : ("/" + props.path)
+              });
+            }
+            return child;
+          })
+        }
       </div>
-    </ul>
+    </div>
   )
 }
 
@@ -124,13 +143,22 @@ const Section = (props) => {
 
 const Node = (props) => {
   return (
-    <li className="pt-3 px-1 text-white">
-      <Link onClick={e => {
-        e.stopPropagation();
-        return true;
-      }} to={props.to}>{props.label}
-      </Link>
-    </li>
+    <div className=" text-white w-full">
+      <NavLink
+        onClick={
+          e => {
+            e.stopPropagation();
+            return true;
+          }
+        }
+        to={props.parentPath + "/" + props.path}
+        className={({ isActive }) =>
+          " w-full block py-2 px-1 " + (isActive ? "bg-sky-800" : undefined)
+        }
+      >
+        {props.label}
+      </NavLink>
+    </div>
   )
 }
 
