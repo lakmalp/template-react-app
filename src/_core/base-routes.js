@@ -57,7 +57,7 @@ let routes = [
   },
   {
     path: '/settings/systemParameters',
-    page: 'SystemParamaters',
+    page: 'SystemParameters',
     folder: '_core/screens',
     isPrivate: true,
     exact: true,

@@ -1,4 +1,4 @@
-import SampleOrderForm from "./SampleOrderForm";
+import SampleOrderForm from "./SiteForm";
 import { IconEdit, IconPlus } from "../../../../_core/utilities/svg-icons"
 import GlobalStateContext from "../../../../_core/providers/GlobalStateContext";
 import { useContext, useEffect } from "react";
@@ -8,7 +8,7 @@ import { ToastContext } from "../../../../_core/providers/ToastContext";
 import { SectionCommandBar } from "../../../../_core/components"
 import { formatDate } from "../../../../_core/utilities/date-formatting";
 
-const SampleOrderLayout = (props) => {
+const SiteLayout = (props) => {
   const globalState = useContext(GlobalStateContext)
   let DialogBox = useContext(DialogBoxContext);
   let Toast = useContext(ToastContext)
@@ -115,4 +115,4 @@ const SampleOrderLayout = (props) => {
   )
 }
 
-export default SampleOrderLayout;
+export default SiteLayout;

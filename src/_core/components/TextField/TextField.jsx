@@ -15,7 +15,7 @@ const TextField = ({
   apiError
 }) => {
   const getClassName = () => {
-    return ' w-full text-' + textAlign + ' ' + theme.textBox[(disabled ? "disabled" : "enabled")]
+    return ' w-full text-' + textAlign + ' ' + theme.textBox[(disabled ? "disabled" : "enabled")] + ((apiError !== "" && apiError[name]) ? " bg-red-50" :"")
   }
 
   return (
@@ -31,7 +31,7 @@ const TextField = ({
         onChange={e => onChangeCallback(e)}
         onBlur={e => onBlurCallback(e)}
       />
-      <div className={(apiError !== "" && apiError[name]) ? "text-xs text-red-600 font-roboto" : "hidden"}>{apiError[name]}</div>
+      <div className={(apiError !== "" && apiError[name]) ? "text-xs text-red-400 font-publicSans pt-1" : "hidden"}>{apiError[name]}</div>
     </div>
   )
 }

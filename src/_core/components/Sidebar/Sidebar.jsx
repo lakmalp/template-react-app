@@ -31,32 +31,21 @@ const Sidebar = () => {
           <Section className="h-full overflow-y-scroll overflow-x-hidden sidebarscroller w-full" collapsed={false} label="Navigator">
             {
               auth.isAuthed &&
-              <Folder path="settings" label="Settings">
-                {permissions.includes("settings.modifyUsers") && <Node path="userProfiles" label="User Profiles" />}
-                <Folder path="security" label="Security">
-                  {permissions.includes("settings.modifyRoles") && <Node path="roles" label="Roles" />}
-                  {permissions.includes("settings.modifyUserRoles") && <Node path="userRoles" label="Roles per User" />}
-                  {permissions.includes("settings.modifyRolePermissions") && <Node path="rolePermissions" label="Permissions per Role" />}
+              <>
+                <Folder path="settings" label="Settings">
+                  {permissions.includes("settings.modifyUsers") && <Node path="userProfiles" label="User Profiles" />}
+                  <Folder path="security" label="Security">
+                    {permissions.includes("settings.modifyRoles") && <Node path="roles" label="Roles" />}
+                    {permissions.includes("settings.modifyUserRoles") && <Node path="userRoles" label="Roles per User" />}
+                    {permissions.includes("settings.modifyRolePermissions") && <Node path="rolePermissions" label="Permissions per Role" />}
+                  </Folder>
+                  {permissions.includes("settings.modifySystemParameters") && <Node path="systemParameters" label="System Parameters" />}
                 </Folder>
-                {permissions.includes("settings.modifySystemParameters") && <Node path="systemParameters" label="System Parameters" />}
-              </Folder>
+                <Folder path="enterp" label="Site">
+                  {permissions.includes("site.index") && <Node path="sites" label="Site" />}
+                </Folder>
+              </>
             }
-            <Folder path="purchase" label="Purchase">
-              <Folder path="purchaseOrder" label="Purchase Order">
-                <Folder path="charges" label="Charges">
-                  <Node path="purchaseOrderCharges" label="Purchase Order Charges" />
-                  <Node path="inventoryParts" label="Inventory Parts" />
-                </Folder>
-                <Node path="purchaseOrders" label="Purchase Orders" />
-              </Folder>
-              <Folder path="part" label="Part">
-                <Node path="purchaseParts" label="Purchase Parts" />
-              </Folder>
-            </Folder>
-            <Folder path="inventory" label="Inventory">
-              <Node path="inventoryParts" label="Inventory Parts" />
-              <Node path="warehouses" label="Warehouses" />
-            </Folder>
           </Section>
           <Footer>
             <Section collapsed={true} label="Alerts" count={alert_count} >

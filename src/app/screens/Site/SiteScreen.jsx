@@ -1,28 +1,23 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import SampleOrderLineLayout from '../../modules/purord/SampleOrderLine/SampleOrderLineLayout';
 import { TabContainer, Tab, TabPane, Panel } from "../../../_core/components";
-import SampleOrderLayout from '../../modules/purord/SampleOrder/SampleOrderLayout';
+import SiteLayout from '../../modules/enterp/Site/SiteLayout';
 import GlobalStateContext from '../../../_core/providers/GlobalStateContext';
-import sample_order_api from '../../modules/purord/SampleOrder/sample_order_api';
-import sample_order_line_api from '../../modules/purord/SampleOrderLine/sample_order_line_api';
+import site_api from '../../modules/enterp/Site/site_api';
 import EventBus from "../../../_core/utilities/event-bus"
 import { Helmet } from 'react-helmet-async';
 
-const SampleOrderScreen = (props) => {
+const SiteScreen = (props) => {
   let id = useParams().id;
   const theme = "blue";
   const containerRef = useRef();
   let globalState = useContext(GlobalStateContext)
 
   useEffect(() => {
-    console.log("------loading SampleOrderScreen----------");
-    globalState.write("SampleOrder", {});
-    globalState.write("SampleOrderLine", []);
+    globalState.write("Site", {});
     EventBus.on("loadHeader", (refresh_id) => {
-      globalState.write("SampleOrder", {});
-      globalState.write("SampleOrderLine", []);
-      refreshData("SampleOrder", refresh_id);
+      globalState.write("Site", {});
+      refreshData("Site", refresh_id);
     }
     );
 
@@ -36,12 +31,12 @@ const SampleOrderScreen = (props) => {
     let data = '';
     let _res = '';
     switch (dataSource) {
-      case "SampleOrder":
+      case "Site":
         try {
           EventBus.dispatch("headerLoading", "");
           EventBus.dispatch("loadingStarted", dataSource);
           globalState.write(dataSource, {});
-          _res = await sample_order_api.get(parent_id);
+          _res = await site_api.get(parent_id);
           data = _res.data.data;
           globalState.write(dataSource, data);
           globalState.setLoadingSource();
@@ -52,26 +47,26 @@ const SampleOrderScreen = (props) => {
         }
         break;
 
-      case "SampleOrderLine":
-        try {
-          EventBus.dispatch("loadingStarted", dataSource);
-          _res = await sample_order_line_api.getPOLines(parent_id, 0, 0);
-          data = _res.data.data;
-          globalState.write(dataSource, data);
-          globalState.setLoadingSource();
-          EventBus.dispatch("loadingFinished");
-        } catch (err) {
-          console.log(err.message)
-        }
-        break;
+      // case "SampleOrderLine":
+      //   try {
+      //     EventBus.dispatch("loadingStarted", dataSource);
+      //     _res = await sample_order_line_api.getPOLines(parent_id, 0, 0);
+      //     data = _res.data.data;
+      //     globalState.write(dataSource, data);
+      //     globalState.setLoadingSource();
+      //     EventBus.dispatch("loadingFinished");
+      //   } catch (err) {
+      //     console.log(err.message)
+      //   }
+      //   break;
 
-      case "SampleOrderCharge":
-        try {
-          globalState.setLoadingSource();
-        } catch (err) {
-          console.log(err.message)
-        }
-        break;
+      // case "SampleOrderCharge":
+      //   try {
+      //     globalState.setLoadingSource();
+      //   } catch (err) {
+      //     console.log(err.message)
+      //   }
+      //   break;
 
       default:
         break;
@@ -81,28 +76,28 @@ const SampleOrderScreen = (props) => {
   return (
     <>
       <Helmet>
-        <title>{`Sample Order - ${id}`}</title>
+        <title>{`Site - ${id}`}</title>
       </Helmet>
       <div id='xxx' className=" w-full " ref={containerRef}>
         <div className="font-montserrat text-md font-semibold text-ss-900 px-2 my-2">
-          {`Sample Order ` + (globalState.loadingSource === "SampleOrder" ? "" : `# ${id}`)}
+          {`Site ` + (globalState.loadingSource === "Site" ? "" : `# ${id}`)}
         </div>
         <Panel name="Header">
-          <SampleOrderLayout
+          <SiteLayout
             parent=""
             parentId={id}
-            name="SampleOrder"
+            name="Site"
             containerRef={containerRef}
-            data={globalState.read("SampleOrder")}
-            refreshData={async (id) => refreshData("SampleOrder", id)}
+            data={globalState.read("Site")}
+            refreshData={async (id) => refreshData("Site", id)}
             className="mt-4 mb-8 px-2"
             theme={theme}
             disabled={globalState.headerIsLoading}
           />
         </Panel>
-        <Panel className="px-2" name="PODetails">
+        <Panel className="px-2" name="SiteDetails">
           <TabContainer>
-            <Tab target="tabSampleOrderLine" label="PO Lines" active />
+            {/* <Tab target="tabSampleOrderLine" label="PO Lines" active /> */}
             {/* <Tab target="tabSampleOrderCharge" label="Charges" />
           <Tab target="tabPoAddressInfo" label="Addres Info" disabled />
           <Tab target="tabPoJournal" label="PO Journal" disabled={globalState.headerIsLoading} />
@@ -114,7 +109,7 @@ const SampleOrderScreen = (props) => {
           <Tab target="tabTab6" label="Another Tab 6" disabled={globalState.headerIsLoading} /> */}
 
             <TabPane name="tabSampleOrderLine" >
-              <SampleOrderLineLayout
+              {/* <SampleOrderLineLayout
                 parent="SampleOrder"
                 parentId={id}
                 name="SampleOrderLine"
@@ -122,7 +117,7 @@ const SampleOrderScreen = (props) => {
                 refreshData={async (id) => refreshData("SampleOrderLine", id)}
                 theme={theme}
                 disabled={globalState.headerIsLoading}
-              />
+              /> */}
             </TabPane>
             {/* <TabPane name="tabSampleOrderCharge">
             <SampleOrderChargeView
@@ -153,4 +148,4 @@ const SampleOrderScreen = (props) => {
   )
 }
 
-export default SampleOrderScreen;
+export default SiteScreen;

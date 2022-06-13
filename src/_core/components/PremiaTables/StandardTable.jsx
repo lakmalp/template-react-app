@@ -317,48 +317,48 @@ const StandardTable = (props) => {
                   }
                 </div>
                 {
-                  <div className="flex items-center h-7">
-                    <span className="mr-2 text-xs text-black font-semibold h-full flex items-center font-montserrat">Search</span>
-                    <input id="main" value={searchParams.main} onChange={e => onSearchParamsChange(e)} type="text" className="pl-1 pr-16 font-inter h-full rounded-l-md border-l border-t border-b w-60 overflow-hidden outline-none" disabled={showAdvSearch} />
-                    <div className="h-full flex items-center justify-center" style={{ right: 0 }}>
-                      {
-                        !showAdvSearch &&
-                        <button onClick={() => search(searchParams)} className="h-7 w-7 text-gray-900 border-t border-b bg-white flex justify-center items-center">
-                          <Icon icon="MagnifyingGlass" color="rgb(70, 70, 70)" width="15" />
-                        </button>
-                      }
-                      <button
-                        // onClick={() => setShowAdvSearch(prev => !prev)}
-                        className=" h-7 w-7 border rounded-r-md bg-white flex justify-center items-center"
-                      >
-                        <Icon icon="VDots" color="rgb(40, 41, 41)" width="15" />
-                      </button>
-                    </div>
-                    {
-                      showAdvSearch &&
-                      <div className="z-50 top-8 w-full absolute font-inter text-xs bg-gray-50 border shadow">
-                        <div className="p-2">
-                          {
-                            props.configuration.columns
-                              .filter(item => {
-                                return (item.visible[viewPortBreakpoint] && item.name !== "_seq_")
-                              })
-                              .map((column, col_index, visible_columns) => {
-                                return (
-                                  <div key={col_index} className="mt-2">
-                                    <label>{column.label}</label>
-                                    <input id={column.name} value={searchParams[column.name]} onChange={e => onSearchParamsChange(e)} type="text" className="h-7 border w-full rounded px-1 outline-none" />
-                                  </div>
-                                );
-                              })
-                          }
-                        </div>
-                        <div className="mt-2 py-1 px-2 flex justify-end bg-gray-100">
-                          <button onClick={() => search(searchParams)} className="border bg-gradient-to-b from-white to-gray-100 text-xs px-2 py-1">Search</button>
-                        </div>
-                      </div>
-                    }
-                  </div>
+                  // <div className="flex items-center h-7">
+                  //   <span className="mr-2 text-xs text-black font-semibold h-full flex items-center font-montserrat">Search</span>
+                  //   <input id="main" value={searchParams.main} onChange={e => onSearchParamsChange(e)} type="text" className="pl-1 pr-16 font-inter h-full rounded-l-md border-l border-t border-b w-60 overflow-hidden outline-none" disabled={showAdvSearch} />
+                  //   <div className="h-full flex items-center justify-center" style={{ right: 0 }}>
+                  //     {
+                  //       !showAdvSearch &&
+                  //       <button onClick={() => search(searchParams)} className="h-7 w-7 text-gray-900 border-t border-b bg-white flex justify-center items-center">
+                  //         <Icon icon="MagnifyingGlass" color="rgb(70, 70, 70)" width="15" />
+                  //       </button>
+                  //     }
+                  //     <button
+                  //       onClick={() => setShowAdvSearch(prev => !prev)}
+                  //       className=" h-7 w-7 border rounded-r-md bg-white flex justify-center items-center"
+                  //     >
+                  //       <Icon icon="VDots" color="rgb(40, 41, 41)" width="15" />
+                  //     </button>
+                  //   </div>
+                  //   {
+                  //     showAdvSearch &&
+                  //     <div className="z-50 top-8 w-full absolute font-inter text-xs bg-gray-50 border shadow">
+                  //       <div className="p-2">
+                  //         {
+                  //           props.configuration.columns
+                  //             .filter(item => {
+                  //               return (item.visible[viewPortBreakpoint] && item.name !== "_seq_")
+                  //             })
+                  //             .map((column, col_index, visible_columns) => {
+                  //               return (
+                  //                 <div key={col_index} className="mt-2">
+                  //                   <label>{column.label}</label>
+                  //                   <input id={column.name} value={searchParams[column.name]} onChange={e => onSearchParamsChange(e)} type="text" className="h-7 border w-full rounded px-1 outline-none" />
+                  //                 </div>
+                  //               );
+                  //             })
+                  //         }
+                  //       </div>
+                  //       <div className="mt-2 py-1 px-2 flex justify-end bg-gray-100">
+                  //         <button onClick={() => search(searchParams)} className="border bg-gradient-to-b from-white to-gray-100 text-xs px-2 py-1">Search</button>
+                  //       </div>
+                  //     </div>
+                  //   }
+                  // </div>
                 }
               </div>
             </td>
@@ -465,20 +465,23 @@ const StandardTable = (props) => {
       </div>
       {
         (Object.keys(filteredData).length > 0) &&
-        <div className="flex justify-end mt-3"><Paginator /></div>
+        <div className="flex justify-end mt-3"><Paginator pager={props.pager} /></div>
       }
     </div>
   )
 }
 
-const Paginator = () => {
+const Paginator = ({ pager }) => {
   return (
     <div className="flex items-center rounded-md border p-1">
-      <button onClick={null} className="text-xs font-inter text-gray-600 p-1 mr-2">First</button>
-      <button onClick={null} className="text-xs font-inter text-gray-600 p-1 px-2 mr-2">4</button>
-      <div className="text-xs font-nunito bg-sky-700 font-semibold p-1 px-2 text-white">5</div>
-      <button onClick={null} className="text-xs font-inter text-gray-600  p-1  px-2 mr-2">6</button>
-      <button onClick={null} className="text-xs font-inter text-gray-600 p-1 ">Last</button>
+      <button onClick={() => pager.goToFirst()} className="text-xs font-inter text-gray-600 p-1 mr-2">First</button>
+      {
+        (pager.current !== 1) &&
+        <button onClick={() => pager.goToPrevious()} className="text-xs font-inter text-gray-600 p-1 px-2 mr-2">{pager.current - 1}</button>
+      }
+      <div className="text-xs font-nunito bg-sky-700 font-semibold p-1 px-2 text-white">{pager.current}</div>
+      <button onClick={() => pager.goToNext()} className="text-xs font-inter text-gray-600  p-1  px-2 mr-2">{pager.current + 1}</button>
+      <button onClick={() => pager.goToLast()} className="text-xs font-inter text-gray-600 p-1 ">Last</button>
     </div>
   )
 }
@@ -491,10 +494,10 @@ const TableDataRow = ({ lineMenu, lineMenuActionHandler, data, columns, isLastRo
     return data[param];
   }
   return (
-    <tr className={"h-8 transition-colors duration-500 border-t hover:bg-gray-50 " + ((rowSelected || lineMenuOpen) ? "bg-gray-100" : "") + (rowSelected?"border-l":"")}>
+    <tr className={"h-8 transition-colors duration-500 border-t hover:bg-gray-50 " + ((rowSelected || lineMenuOpen) ? "bg-gray-100" : "") + (rowSelected ? "border-l" : "")}>
       <td className={"text-xs border-la border-ra bg-gray-100a " + (isLastRow ? " " : " ")}>
         {
-          lineMenu && 
+          lineMenu &&
           <button className="h-8 w-8 flex justify-center items-center transition-colors " onClick={() => setLineMenuOpen(prev => !prev)}>
             <Icon icon="VDots" className="" color="gray" width="15" />
           </button>

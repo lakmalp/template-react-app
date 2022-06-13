@@ -29,32 +29,35 @@ export const DialogBoxPlaceholder = (props) => {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div className={"inline-block  " + (windowSize === windowSizes.Maximized ? " h-screen " : "rounded-lg") + " text-left overflow-hidden shadow-lg transform transition-all sm:align-middle " + (windowSize)}>
           <div className="bg-gray-200 w-full">
-            <div className={`flex sm:justify-end`}>
-              <button
-                onClick={() => {
-                  if (windowSize === windowSizes.Default) {
-                    setWindowSize(windowSizes.Maximized)
+            <div className={`flex sm:justify-between items-center`}>
+              <div className="text-black font-roboto text-sm font-semibold px-2">{props.params.title}</div>
+              <div className="flex items-center">
+                <button
+                  onClick={() => {
+                    if (windowSize === windowSizes.Default) {
+                      setWindowSize(windowSizes.Maximized)
+                    }
+                    if (windowSize === windowSizes.Maximized) {
+                      setWindowSize(windowSizes.Default)
+                    }
+                  }}
+                  type="button"
+                  className={`h-8 w-8 bg-gray-700 text-xs font-inter hover:bg-gray-800`}
+                >
+                  {
+                    windowSize === windowSizes.Maximized
+                      ? <IconWindowMaximize className="mx-auto" color="#fff" width="12" />
+                      : <IconWindowRestore className="mx-auto" color="#fff" width="12" />
                   }
-                  if (windowSize === windowSizes.Maximized) {
-                    setWindowSize(windowSizes.Default)
-                  }
-                }}
-                type="button"
-                className={`h-8 w-8 bg-gray-700 text-xs font-inter hover:bg-gray-800`}
-              >
-                {
-                  windowSize === windowSizes.Maximized
-                    ? <IconWindowMaximize className="mx-auto" color="#fff" width="12" />
-                    : <IconWindowRestore className="mx-auto" color="#fff" width="12" />
-                }
-              </button>
-              <button
-                onClick={() => props.callback(DialogBoxConstants.Result.Close, {}, DialogBox.stack)}
-                type="button"
-                className={"h-8 w-8 bg-gray-700 text-center " + (windowSize === windowSizes.Maximized ? "" : "rounded-tr") + " bg-gradient-to-b text-xs font-inter hover:from-red-600 hover:to-red-600 hover:shadow-md hover:text-white"}
-              >
-                <IconTimes className="mx-auto" color="white" width="18" />
-              </button>
+                </button>
+                <button
+                  onClick={() => props.callback(DialogBoxConstants.Result.Close, {}, DialogBox.stack)}
+                  type="button"
+                  className={"h-8 w-8 bg-gray-700 text-center " + (windowSize === windowSizes.Maximized ? "" : "rounded-tr") + " bg-gradient-to-b text-xs font-inter hover:from-red-600 hover:to-red-600 hover:shadow-md hover:text-white"}
+                >
+                  <IconTimes className="mx-auto" color="white" width="18" />
+                </button>
+              </div>
             </div>
             <div className="sm:flex sm:items-start w-full">
               <div className="text-center sm:mt-0 sm:text-left w-full">

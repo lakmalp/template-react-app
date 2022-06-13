@@ -1,27 +1,19 @@
 const routes = [
   {
-    path: 'sampleOrders/:id',
-    page: 'SampleOrder/SampleOrderScreen',
+    path: 'enterp/sites/:id',
+    page: 'Site/SiteScreen',
     folder: 'app/screens',
     isPrivate: true,
     exact: true,
-    grant: 'sampleOrder.index'
+    grant: 'site.index'
   },
   {
-    path: 'sampleOrders',
-    page: 'SampleOrder/SampleOrderOverviewScreen',
+    path: 'enterp/sites',
+    page: 'Site/SiteOverviewScreen',
     folder: 'app/screens',
     isPrivate: true,
     exact: true,
-    grant: 'sampleOrder.index'
-  },
-  {
-    path: 'temp',
-    page: 'Temp',
-    folder: 'app/screens',
-    isPrivate: true,
-    exact: true,
-    grant: 'sampleOrder.index'
+    grant: 'site.index'
   },
 ];
 

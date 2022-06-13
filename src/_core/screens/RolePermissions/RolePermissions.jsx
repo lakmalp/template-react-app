@@ -111,7 +111,7 @@ const RolePermissions = () => {
                   <td className="" colSpan={roles.length}>
                     <input
                       type="text"
-                      className="w-full h-8 rounded-md px-1 border focus:outline-none bg-yellow-50 text-center"
+                      className="w-full h-8 rounded-md px-1 border focus:outline-none bg-yellow-50 text-center bg-indigo-600a"
                       value={filterRoleText}
                       onChange={(e) => handleFilterRoleTextChange(e)}
                     />
@@ -133,11 +133,10 @@ const RolePermissions = () => {
                 {
                   roles && roles.map((role, i) => {
                     return (
-                      <td key={i} className={"w-12 align-bottom pb-1 border " + (hoverPos && hoverPos.col === i ? "bg-gray-200" : "")}>
+                      <td key={i} className={"w-8 align-bottom pb-1 border " + (hoverPos && hoverPos.col === i ? "bg-gray-200" : "")}>
                         <div className="flex justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="100%">
-                            <text id="thetext" transform="rotate(270, 12, 0) translate(-138,-2)" fill={(hoverPos && hoverPos.col === i ? "black" : "rgb(90,90,90)")}>{role.code}</text>
-                            <text color="red">ddd</text>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="100%">
+                            <text font-size="8pt" font-weight="bold" id="thetext" fill="rgb(90,90,90)" transform="rotate(270, 12, 0) translate(-138,-2)" >{role.code}</text>
                           </svg>
                         </div>
                       </td>
@@ -150,8 +149,8 @@ const RolePermissions = () => {
               {
                 permissions && permissions.map((permission, r) => {
                   return (
-                    <tr key={r} className="font-roboto text-sm h-8">
-                      <td className={"border px-1 " + (hoverPos && hoverPos.row === r ? "bg-gray-200 text-black" : "text-gray-700")}>{permission.code}</td>
+                    <tr key={r} className="font-inter text-xs h-6">
+                      <td className={"border px-1 " + (hoverPos && hoverPos.row === r ? "bg-gray-200" : "")}>{permission.code}</td>
                       {
                         roles.map((role, c) => {
                           return (
