@@ -29,6 +29,7 @@ const SiteOverviewScreen = (props) => {
 
   const pager = {
     current: page,
+    pageSize: pageSize,
     goToFirst: () => setPage(1),
     goToPrevious: () => setPage(page => page - 1),
     goToNext: () => setPage(page => page + 1),

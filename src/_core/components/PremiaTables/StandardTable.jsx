@@ -465,13 +465,26 @@ const StandardTable = (props) => {
       </div>
       {
         (Object.keys(filteredData).length > 0) &&
-        <div className="flex justify-end mt-3"><Paginator pager={props.pager} /></div>
+        <div className="flex justify-end mt-3"><Paginator pager={props.pager} data={tableData} /></div>
       }
     </div>
   )
 }
 
-const Paginator = ({ pager }) => {
+const Paginator = ({ pager, data }) => {
+  const [isNextPageAvail, setIsNextPageAvail] = useState(true);
+  const [isPrevPageAvail, setIsPrevPageAvail] = useState(true);
+
+  useEffect(() => {
+    let recCount = data.length;
+    let currRecCount = pager.current * pager.pageSize;
+    if (recCount > currRecCount) {
+      setIsNextPageAvail(true);
+    } else {
+      setIsNextPageAvail(false);
+    }
+  }, [pager, data])
+  
   return (
     <div className="flex items-center rounded-md border p-1">
       <button onClick={() => pager.goToFirst()} className="text-xs font-inter text-gray-600 p-1 mr-2">First</button>
@@ -480,8 +493,8 @@ const Paginator = ({ pager }) => {
         <button onClick={() => pager.goToPrevious()} className="text-xs font-inter text-gray-600 p-1 px-2 mr-2">{pager.current - 1}</button>
       }
       <div className="text-xs font-nunito bg-sky-700 font-semibold p-1 px-2 text-white">{pager.current}</div>
-      <button onClick={() => pager.goToNext()} className="text-xs font-inter text-gray-600  p-1  px-2 mr-2">{pager.current + 1}</button>
-      <button onClick={() => pager.goToLast()} className="text-xs font-inter text-gray-600 p-1 ">Last</button>
+      <button onClick={() => pager.goToNext()} className="text-xs font-inter text-gray-600  p-1  px-2 mr-2" disabled={!isNextPageAvail}>{pager.current + 1}</button>
+      <button onClick={() => pager.goToLast()} className="text-xs font-inter text-gray-600 p-1 " disabled={!isNextPageAvail}>Last</button>
     </div>
   )
 }

@@ -258,17 +258,15 @@ const SiteOverviewLayout = (props) => {
   }
 
   const cmdNewRecord_callback = async (result, data) => {
-    return null;
+    props.refreshData("Site");
   }
 
   const prepareCreate = async (seq, positioning) => {
     let params = {
-      // parent_id: globalState.read(props.parent).id,
       title: "Create Site",
       current_sequence: seq,
       positioning: positioning,
-      mode: "new",
-      refreshData: async () => props.refreshData(globalState.read(props.parent).id)
+      mode: "new"
     };
     let window_size = "sm:w-5/6 md:w-4/6 lg:w-2/4 xl:w-2/5 2xl:w-3/12";
     DialogBox.showModal(<SiteForm />, window_size, params, cmdNewRecord_callback);

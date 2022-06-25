@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   const checkHeartBeat = async (location, auth_api) => {
     if ((typeof location.pathname !== 'undefined') && (location.pathname !== '/login')) {
       try {
-        let res = await auth_api.user();
+        let res = await auth_api.userInquire();
       } catch (e) {
         setIsAuthed(false);
         navigate("/login");

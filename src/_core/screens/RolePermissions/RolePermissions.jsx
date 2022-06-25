@@ -96,7 +96,7 @@ const RolePermissions = () => {
         <title>Roles per User</title>
       </Helmet>
       <div className="w-full p-2 rounded overflow-hidden">
-        <h1>Roles per User Matrix</h1>
+        <h1 className="font-sans text-sm">Roles per User Matrix</h1>
         {
           !roles && <div>Loading...</div>
         }
@@ -149,7 +149,7 @@ const RolePermissions = () => {
               {
                 permissions && permissions.map((permission, r) => {
                   return (
-                    <tr key={r} className="font-inter text-xs h-6">
+                    <tr key={r} className="font-sans text-sm h-7">
                       <td className={"border px-1 " + (hoverPos && hoverPos.row === r ? "bg-gray-200" : "")}>{permission.code}</td>
                       {
                         roles.map((role, c) => {

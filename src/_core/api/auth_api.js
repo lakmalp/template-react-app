@@ -13,6 +13,9 @@ const auth_api = {
   user: () => {
     return api().get("/api/user")
   },
+  userInquire: () => {
+    return api().get("/api/user?inquireAuth")
+  },
   register: (name, email, password) => {
     return api().post("/register", { "name": name, "email": email, "password": password })
   },
