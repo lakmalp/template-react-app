@@ -8,41 +8,31 @@ const Sidebar = () => {
   let banner_height = 70;
   let alert_count = 5;
   let auth = useContext(AuthContext);
-  const [permissions, setPermissions] = useState([]);
-
-  useEffect(() => {
-    if (auth.isAuthed) {
-      if (Array.isArray(auth.permissions)) {
-        setPermissions(
-          auth.permissions.map(item => item.code)
-        )
-      }
-    }
-  }, [auth.isAuthed, auth.permissions])
 
   return (
-    <div className="relative" style={{ minWidth: "15rem" }}>
+    <div className="relative " style={{ minWidth: "15rem" }}>
       {/* <section className="absolute h-screen  bg-sky-900 flex items-end">
         <img src={backdropimg} alt="raindrops" />
       </section> */}
-      <nav className='absolute border-r bg-sky-900 text-gray-800 font-publicSans text-xs h-screen' style={{ minWidth: "15rem" }}>
+      <nav className='absolute border-ra bg-zinc-100 text-gray-800 font-publicSans text-xs h-screen' style={{ minWidth: "15rem" }}>
         <Banner height={banner_height} />
         <div style={{ height: `calc(100vh - ${banner_height}px)` }}>
-          <Section className="h-full overflow-y-scroll overflow-x-hidden sidebarscroller w-full" collapsed={false} label="Navigator">
+          <Section className="h-full overflow-y-auto overflow-x-hidden sidebarscroller w-full" collapsed={false} label="Navigator">
             {
               auth.isAuthed &&
               <>
                 <Folder path="settings" label="Settings">
-                  {permissions.includes("settings.modifyUsers") && <Node path="userProfiles" label="User Profiles" />}
+                  {auth.grants.includes("POST:api/userProfiles") && <Node path="userProfiles" label="User Profiles" />}
                   <Folder path="security" label="Security">
-                    {permissions.includes("settings.modifyRoles") && <Node path="roles" label="Roles" />}
-                    {permissions.includes("settings.modifyUserRoles") && <Node path="userRoles" label="Roles per User" />}
-                    {permissions.includes("settings.modifyRolePermissions") && <Node path="rolePermissions" label="Permissions per Role" />}
+                    {auth.grants.includes("POST:api/fnd/roles") && <Node path="roles" label="Roles" />}
+                    {auth.grants.includes("POST:api/fnd/userRoles") && <Node path="userRoles" label="Roles per User" />}
+                    {auth.grants.includes("POST:api/fnd/rolePermissions") && <Node path="rolePermissions" label="Permissions per Role" />}
                   </Folder>
-                  {permissions.includes("settings.modifySystemParameters") && <Node path="systemParameters" label="System Parameters" />}
+                  {auth.grants.includes("PATCH:api/fnd/systemParameters") && <Node path="systemParameters" label="System Parameters" />}
                 </Folder>
-                <Folder path="enterp" label="Site">
-                  {permissions.includes("site.index") && <Node path="sites" label="Site" />}
+                <Folder path="enterp" label="Enterprise">
+                  {auth.grants.includes("POST:api/sites") && <Node path="sites" label="Site" />}
+                  {auth.grants.includes("POST:api/sites") && <Node path="companies" label="Company" />}
                 </Folder>
               </>
             }
@@ -60,13 +50,14 @@ const Sidebar = () => {
 
 const Banner = ({ height }) => {
   return (
-    <section className={`text-center w-full text-lg text-sky-500 h-[${height}px] shadow font-roboto flex items-center justify-center`}><span>Eco Power<br />WOMS</span></section>
+    <section className={`text-center w-full text-lg h-[${height}px] shadowa font-roboto flex items-center justify-center h-10`}><span>Eco Power</span></section>
   )
 }
 
 const Folder = (props) => {
   let location = useLocation();
   const [folderCollapsed, setFolderCollapsed] = useState(true);
+  const [content, setContent] = useState();
 
   useEffect(() => {
     if (location.pathname.split("/").includes(props.path)) {
@@ -79,25 +70,32 @@ const Folder = (props) => {
     setFolderCollapsed(val);
   }
 
+  useEffect(() => {
+    let _content = Children.map(props.children, (child, index) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, {
+          parentPath: props.parentPath ? (props.parentPath + "/" + props.path) : ("/" + props.path)
+        });
+      }
+      return child;
+    });
+
+    setContent(_content);
+  }, [props.children, props.parentPath, props.path])
+
   return (
-    <div className=" w-full rounded pt-1">
-      <div className={"py-1 px-1 flex justify-between items-center text-white cursor-default " + (folderCollapsed ? "" : "bg-sky-800a")} onClick={(e) => collapseFolder(e, !folderCollapsed)}>
-        <span className="">{props.label}</span>
-        <span className={"transition-all duration-300 " + (folderCollapsed ? "" : "rotate-90")}><IconChevronRight width="12" color="white" /></span>
+    (Children.count(content) > 0) &&
+    <div className=" w-full rounded mt-1 pt-1 pr-1">
+      <div className={"py-1 px-1 flex justify-betweenx items-center text-black cursor-default " + (folderCollapsed ? "" : "")} onClick={(e) => collapseFolder(e, !folderCollapsed)}>
+        <span className={"transition-all duration-300 " + (folderCollapsed ? "" : "rotate-90")}><IconChevronRight width="12" color="black" /></span>
+        <span className=" ml-1">{props.label}</span>
       </div>
-      <div className={(folderCollapsed ? "hidden" : "ml-2 w-full")}>
+      <div className={(folderCollapsed ? "hidden" : "ml-3 w-full")}>
         {
-          Children.map(props.children, (child, index) => {
-            if (React.isValidElement(child)) {
-              return React.cloneElement(child, {
-                parentPath: props.parentPath ? (props.parentPath + "/" + props.path) : ("/" + props.path)
-              });
-            }
-            return child;
-          })
+          content
         }
       </div>
-    </div>
+    </div >
   )
 }
 
@@ -119,9 +117,8 @@ const Section = (props) => {
 
   return (
     <div className={props.className} onClick={(e) => collapseSection(e, !sectionCollapsed)}>
-      <div className="flex items-center justify-between w-full bg-sky-700">
-        <div className="p-1 text-white w-full">{`${props.label} ${props.count ? " ( " + props.count + " )" : ""}`}</div>
-        <span className={"transition-all duration-300 " + (sectionCollapsed ? "" : "rotate-90")}><IconChevronRight width="12" color="white" /></span>
+      <div className="flex items-center justify-between w-full bg-zinc-200">
+        <div className="p-1 text-zinc-500 w-full font-semibold uppercase text-xs ">{`${props.label} ${props.count ? " ( " + props.count + " )" : ""}`}</div>
       </div>
       <div className={(sectionCollapsed ? "hidden" : "")}>
         {props.children}
@@ -132,7 +129,7 @@ const Section = (props) => {
 
 const Node = (props) => {
   return (
-    <div className=" text-white w-full">
+    <div className=" text-gray-900 w-full">
       <NavLink
         onClick={
           e => {
@@ -142,10 +139,13 @@ const Node = (props) => {
         }
         to={props.parentPath + "/" + props.path}
         className={({ isActive }) =>
-          " w-full block py-2 px-1 " + (isActive ? "bg-sky-800" : undefined)
+          " w-full block py-2 px-1 " + (isActive ? " font-semibold" : "")
         }
       >
-        {props.label}
+        <div className="flex items-center">
+          <span className={"transition-all duration-300 ml-3"}></span>
+          <span className="ml-1">{props.label}</span>
+        </div>
       </NavLink>
     </div>
   )

@@ -231,7 +231,6 @@ const SiteOverviewLayout = (props) => {
   ];
 
   const sideBarInquireHandler = (data, setData, selectedLines, action) => {
-    console.log('sideBarInquireHandler()');
     if (props.disabled) {
       return false;
     } else {
@@ -389,20 +388,15 @@ const SiteOverviewLayout = (props) => {
         commandBarInquireHandler={commandBarInquireHandler} // commandBarInquireHandler: command bar inquire callback      
         commandBarActionHandler={commandBarActionHandler}   // commandBarActionHandler: command bar action handler callback      
 
-        sideBarButtons={sideBarButtons}                              // sideBarButtons: side bar configuration      
-        sideBarInquireHandler={sideBarInquireHandler}                        // sideBarInquireHandler: side bar inquire callback      
-        sideBarActionHandler={sideBarActionHandler}                         // sideBarActionHandler: side bar action handler callback      
+        sideBarButtons={sideBarButtons}                     // sideBarButtons: side bar configuration      
+        sideBarInquireHandler={sideBarInquireHandler}       // sideBarInquireHandler: side bar inquire callback      
+        sideBarActionHandler={sideBarActionHandler}         // sideBarActionHandler: side bar action handler callback      
 
         containerRef={props.containerRef}                   // containerRef: used in column resizing when table is resized
-        doSearch={props.doSearch}                                 // doSearch:			            search callback      
+        doSearch={props.doSearch}                           // doSearch:			            search callback      
         doDetailSearch={doDetailSearch}                     // doDetailSearch:			      detail search callback
         disabled={props.disabled}                           // disabled: disables all button actions
       />
-      {/* <pre>
-        {
-          JSON.stringify(props.data,null,2)
-        }
-    </pre> */}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import auth_api from '../api/auth_api';
 import { decodeError } from '../utilities/exception-handler';
 import { useNavigate, useLocation } from "react-router-dom";
 import permission_api from '../api/permission_api';
+import user_permission_api from '../api/user_permission_api';
 
 export const AuthContext = React.createContext();
 
@@ -13,6 +14,8 @@ export const AuthProvider = ({ children }) => {
   const [isPingingServer, setIsPingingServer] = useState(true);
   const [user, setUser] = useState();
   const [permissions, setPermissions] = useState();
+  const [userPermissions, setUserPermissions] = useState();
+  const [grants, setGrants] = useState([]);
   const [authError, setAuthError] = useState("");
   const heartBeatHandleRef = useRef();
 
@@ -27,6 +30,8 @@ export const AuthProvider = ({ children }) => {
       let res = await auth_api.login(email, password);
       let user_res = await auth_api.user();
       let perm_res = await permission_api.index();
+      let user_perm_res = await user_permission_api.index();
+      setUserPermissions(user_perm_res.data.data);
       setPermissions(perm_res.data.data);
       setUser(user_res.data)
       setIsAuthed(true)
@@ -80,6 +85,22 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const processGrants = () => {
+    if (isAuthed) {
+      if (Array.isArray(userPermissions)) {
+        let _grants = userPermissions
+          .map(item => {
+            return `${item.method}:${item.endpoint}`
+          })
+        setGrants(_grants);
+      }
+    }
+  }
+
+  useEffect(() => {
+    processGrants();
+  }, [isAuthed, permissions])
+
   useEffect(() => {
     heartBeatHandleRef.current = setInterval(checkHeartBeat, 50000, location, auth_api);
 
@@ -92,6 +113,8 @@ export const AuthProvider = ({ children }) => {
         setIsAuthWaiting(true)
         let res = await auth_api.user();
         let perm_res = await permission_api.index();
+        let user_perm_res = await user_permission_api.index();
+        setUserPermissions(user_perm_res.data.data);
         setPermissions(perm_res.data.data);
         setUser(res.data)
         setIsAuthed(true)
@@ -117,6 +140,7 @@ export const AuthProvider = ({ children }) => {
         isAuthed: isAuthed,
         user: user,
         permissions: permissions,
+        grants: grants,
         register: (name, email, password) => register(name, email, password),
         login: (email, password) => login(email, password),
         logout: () => logout()

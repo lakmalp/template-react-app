@@ -20,14 +20,14 @@ const RolePermissions = () => {
       try {
         let role_res = await role_api.index();
         let permission_res = await permission_api.index();
-        let role_permission_res = await role_permission_api.index();
+        let role_permission_res = await role_permission_api.list();
 
         originalDataRef.current = {
           permissions: permission_res.data.data.sort((a, b) => {
-            if (a.code < b.code) {
+            if (a.endpoint < b.endpoint) {
               return -1
             }
-            if (a.code > b.code) {
+            if (a.endpoint > b.endpoint) {
               return 1
             }
             return 0
@@ -72,7 +72,7 @@ const RolePermissions = () => {
         return { ...prev, [`${permission_id}-${role_id}`]: 'loading' }
       });
       let res = await role_permission_api.toggle(permission_id, role_id);
-      let role_permission_res = await role_permission_api.index();
+      let role_permission_res = await role_permission_api.list();
       originalDataRef.current = role_permission_res.data.data;
       setRolePermissions(originalDataRef.current);
     } catch (e) {
@@ -87,16 +87,16 @@ const RolePermissions = () => {
 
   const handleFilterPermissionTextChange = (e) => {
     setFilterPermissionText(e.target.value)
-    setPermissions(originalDataRef.current.permissions.filter(permission => (permission.code.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0)))
+    setPermissions(originalDataRef.current.permissions.filter(permission => (permission.endpoint.toUpperCase().indexOf(e.target.value.toUpperCase()) >= 0)))
   }
 
   return (
     <>
       <Helmet>
-        <title>Roles per User</title>
+        <title>Permissions per Role</title>
       </Helmet>
       <div className="w-full p-2 rounded overflow-hidden">
-        <h1 className="font-sans text-sm">Roles per User Matrix</h1>
+        <h1 className="font-sans text-sm">Permissions per Role Matrix</h1>
         {
           !roles && <div>Loading...</div>
         }
@@ -149,8 +149,11 @@ const RolePermissions = () => {
               {
                 permissions && permissions.map((permission, r) => {
                   return (
-                    <tr key={r} className="font-sans text-sm h-7">
-                      <td className={"border px-1 " + (hoverPos && hoverPos.row === r ? "bg-gray-200" : "")}>{permission.code}</td>
+                    <tr key={r} className="font-sans text-xs h-7">
+                      <td className={"border px-1 " + (hoverPos && hoverPos.row === r ? "bg-gray-200" : "")}>
+                        <span>{`${permission.endpoint}`}</span>
+                        <span className="ml-2 text-sky-600 font-semibold">{`[${permission.method}]`}</span>
+                      </td>
                       {
                         roles.map((role, c) => {
                           return (

@@ -4,6 +4,9 @@ const role_permission_api = {
   index: (query_params) => {
     return api().get("/api/fnd/rolePermissions", { params: query_params })
   },
+  list: (query_params) => {
+    return api().get("/api/fnd/rolePermissions/list", { params: query_params })
+  },
   get: (id) => {
     return api().get(`/api/fnd/rolePermissions/${id}`)
   },

@@ -14,7 +14,7 @@ const auth_api = {
     return api().get("/api/user")
   },
   userInquire: () => {
-    return api().get("/api/user?inquireAuth")
+    return api().get("/api/userProfiles?inquireAuth")
   },
   register: (name, email, password) => {
     return api().post("/register", { "name": name, "email": email, "password": password })
