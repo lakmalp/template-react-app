@@ -23,7 +23,7 @@ const MainCommandBar = () => {
         className="mr-2 h-7 px-2"
         text="Refresh"
         callback={() => refresh()}
-        icon={{ component: <IconRefresh />, width: 10 }}
+        icon={{ component: <IconRefresh />, width: 10, color: "white" }}
       />
       <Button
         variant="danger"
@@ -32,7 +32,7 @@ const MainCommandBar = () => {
         disabled={auth.isAuthWaiting}
         animate={auth.isAuthWaiting}
         callback={() => logout()}
-        icon={{ component: <IconSignoutCircle />, width: 15 }}
+        icon={{ component: <IconSignoutCircle />, width: 15, color: "white" }}
       />
     </div>
   )

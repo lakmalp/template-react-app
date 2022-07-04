@@ -37,11 +37,11 @@ const PrivateAppShell = (props) => {
             <div className=" w-full">
               <div className='w-full flex justify-between items-center px-2 h-10 border-b shadow'>
                 <Button
-                  variant="primary"
+                  variant="secondary"
                   className=" px-1 "
                   text=""
                   callback={() => setSidebarCollapsed(prev => !prev)}
-                  icon={{ component: <IconSidebar />, width: 20 }}
+                  icon={{ component: <IconSidebar />, width: 20, color: "white" }}
                 />
                 <BreadCrumbs />
                 <MainCommandBar />
